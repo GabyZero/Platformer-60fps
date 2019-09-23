@@ -1,24 +1,14 @@
-#include <SFML/Graphics.hpp>
+#include "gamev1.hpp"
+
+#include <stdlib.h>
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+    //Game *test = new GameTest();
 
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-
-        window.clear();
-        window.draw(shape);
-        window.display();
-    }
-
-    return 0;
+    //test->run();
+    Gamev1 test;
+    test.initGame();
+    test.run();
+    exit(0);
 }
