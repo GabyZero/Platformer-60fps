@@ -3,14 +3,17 @@
 
 #include "sceneinterface.hpp"
 #include "graphics/staticbackground.hpp"
+#include "player.hpp"
+
 #include <forward_list>
 
 class Scene : public SceneInterface{
-    private:
-        //std::forward_list<std::sf::Drawable> static_elements;
-         graphics::StaticBackground background;
-
     public:
+        //std::forward_list<std::sf::Drawable> static_elements;
+        graphics::StaticBackground background;
+        Player player;
+
+
         Scene();
 
         void initScene();

@@ -13,6 +13,7 @@ void Scene::initScene()
 void Scene::render(sf::RenderWindow& window)
 {
     window.draw(background);
+    window.draw(player);
 }
 
 Scene::~Scene()
