@@ -17,6 +17,7 @@ class Scene : public SceneInterface{
         Scene();
 
         void initScene();
+        void UpdatePhysics(_Float32);
         virtual void render(sf::RenderWindow &window);
 
         ~Scene();

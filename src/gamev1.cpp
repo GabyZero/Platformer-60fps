@@ -11,6 +11,8 @@ void Gamev1::run()
     _Float32 dt = 1.0f / 60.0f; 
     std::chrono::duration<_Float32> tmp_dt;
 
+    _Float32 accumulator = 0;
+
     std::chrono::time_point begin_ticks = std::chrono::high_resolution_clock::now();
     while (window.isOpen())
     {
@@ -23,7 +25,10 @@ void Gamev1::run()
 
         window.clear();
 
+
         scene.player.Update(dt);
+        scene.UpdatePhysics(dt);
+        accumulator -= 1.0/60.0f;
 
         scene.render(window);
         
@@ -32,8 +37,12 @@ void Gamev1::run()
 
         std::chrono::time_point end_ticks = std::chrono::high_resolution_clock::now();
         tmp_dt = std::chrono::duration_cast<std::chrono::duration<_Float32>>(end_ticks-begin_ticks);
-        dt = tmp_dt.count();
+
+
+        //dt = tmp_dt.count();
 
         begin_ticks = end_ticks;
+
+        std::cout << 1.0f/dt << std::endl;
     }
 }
