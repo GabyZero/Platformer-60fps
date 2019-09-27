@@ -13,7 +13,7 @@ class Player : public sf::Drawable{
     public:
         /** attributes **/
 
-        sf::Texture texture;
+        /*sf::Texture texture;*/
         sf::Sprite sprite;
 
         enum State { left, right, jump, iddle};
@@ -23,7 +23,7 @@ class Player : public sf::Drawable{
         /** constructor **/
 
         Player();
-
+        void initPlayer();
         /** Method **/
 
         /** sf::Drawable implementaion **/

@@ -9,15 +9,13 @@ namespace graphics
     class StaticBackground : public sf::Drawable
     {
         private:
-            sf::Texture texture;
             sf::Sprite sprite;
 
         public:
             StaticBackground();
-            StaticBackground(std::string);
 
             /** set image the image of the background, shall be the size of the game **/
-            void setImage(std::string);
+            void setImage(const sf::Texture&);
 
             /** sf::Drawable implementaion **/
             virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

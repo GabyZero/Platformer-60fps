@@ -1,10 +1,16 @@
 #include "player.hpp"
 #include <iostream>
+
+#include "resources/resourcesmanager.hpp"
+
 Player::Player():
-texture(),sprite()
+sprite()
 {
-    texture.loadFromFile("player.png");
-    sprite.setTexture(texture);
+}
+
+void Player::initPlayer()
+{
+    sprite.setTexture(resources::ResourcesManager::instance().textures.getAsset("player"));
     sprite.setPosition(32,250);
     state = State::iddle;
 }

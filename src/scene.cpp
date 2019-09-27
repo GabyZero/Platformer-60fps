@@ -1,5 +1,7 @@
 #include "scene.hpp"
 
+#include "resources/resourcesmanager.hpp"
+
 Scene::Scene()
 {
 
@@ -7,9 +9,8 @@ Scene::Scene()
 
 void Scene::initScene()
 {
-    background.setImage("background.png");
-
-
+    background.setImage(resources::ResourcesManager::instance().textures.getAsset("background"));
+    player.initPlayer();
 }
 
 void Scene::updatePhysics(_Float32 dt)

@@ -7,22 +7,12 @@ StaticBackground::StaticBackground()
 
 }
 
-StaticBackground::StaticBackground(std::string _path):
-texture(),sprite()
-{
-    setImage(_path);
-}
 
-void StaticBackground::setImage(std::string path)
+void StaticBackground::setImage(const sf::Texture &texture)
 {
-    if(!texture.loadFromFile(path))
-    {
-        //throw "backgroud not found";
-    }
-    else
-    {
-        sprite.setTexture(texture,true);
-    }
+
+    sprite.setTexture(texture,true);
+    
 }
 
 void StaticBackground::draw(sf::RenderTarget& target, sf::RenderStates states) const
