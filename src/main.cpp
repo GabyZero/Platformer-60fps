@@ -7,8 +7,10 @@ int main()
     //Game *test = new GameTest();
 
     //test->run();
-    Gamev1 test;
-    test.initGame();
-    test.run();
+    Game *test = new Gamev1();
+    test->initGame();
+    //test.run();
+
+    delete test;
     exit(0);
 }

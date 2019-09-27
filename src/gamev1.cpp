@@ -5,6 +5,8 @@
 Gamev1::Gamev1():Game()
 {}
 
+Gamev1::~Gamev1(){}
+
 void Gamev1::run()
 {
     _Float32 dt = 1.0f / 60.0f; 

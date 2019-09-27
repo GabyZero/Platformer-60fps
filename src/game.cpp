@@ -2,6 +2,7 @@
 
 #include "resources/resourcesmanager.hpp"
 
+
 Game::Game():
 window(sf::VideoMode(_WIDTH, _HEIGHT), _GAMENAME, sf::Style::Titlebar|sf::Style::Close)
 {
@@ -15,5 +16,5 @@ void Game::initGame()
 
 Game::~Game()
 {
-    
+    window.close();
 }

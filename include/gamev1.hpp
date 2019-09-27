@@ -6,6 +6,7 @@
 class Gamev1 : public Game{
     public:
         Gamev1();
+        virtual ~Gamev1();
 
         virtual void run();
 };

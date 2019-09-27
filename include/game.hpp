@@ -27,7 +27,7 @@ class Game{
         /** Game loop, to be implemented**/
         virtual void run() = 0;
 
-        ~Game();
+        virtual ~Game();
 
 };
 
