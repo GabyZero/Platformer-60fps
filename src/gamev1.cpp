@@ -25,8 +25,8 @@ void Gamev1::run()
         window.clear();
 
 
-        scene.player.Update(dt);
-        scene.UpdatePhysics(1.0f / 60.0f);
+        scene.update(dt);
+        scene.updatePhysics(1.0f / 60.0f);
 
         scene.render(window);
         

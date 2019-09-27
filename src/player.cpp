@@ -14,7 +14,7 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
     target.draw(sprite, states);
 }
 
-void Player::UpdatePhysics(_Float32 dt)
+void Player::updatePhysics(_Float32 dt)
 {
     if(yAcceleration != 0)
     {
@@ -23,16 +23,16 @@ void Player::UpdatePhysics(_Float32 dt)
 
         sprite.setPosition(sprite.getPosition().x, sprite.getPosition().y - (yAcceleration*dt));
 
-        if(time>0.8/*apex*/) 
+        if(time>0.5/*apex*/) 
         {
             yAcceleration = 0.f;
             time = 0;
         }
-        yAcceleration-=jumpSpeed*dt; //TODO gravity
+        yAcceleration-=jumpSpeed*dt*2; //TODO gravity
     }
 }
 
-void Player::Update(_Float32 dt)
+void Player::update(_Float32 dt)
 {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
     {

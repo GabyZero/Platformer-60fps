@@ -8,13 +8,21 @@ Scene::Scene()
 void Scene::initScene()
 {
     background.setImage("background.png");
+
+
 }
 
-void Scene::UpdatePhysics(_Float32 dt)
+void Scene::updatePhysics(_Float32 dt)
 {
-    player.UpdatePhysics(dt);
+    player.updatePhysics(dt);
+    level.updatePhysics(dt);
 }
 
+void Scene::update(float dt)
+{
+    player.update(dt);
+    level.update(dt);
+}
 
 void Scene::render(sf::RenderWindow& window)
 {

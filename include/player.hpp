@@ -5,8 +5,8 @@
 
 class Player : public sf::Drawable{
     private:
-        float speed = 75.0f; //todo const
-        float jumpSpeed = 150.0f; // todo const
+        float speed = 150.0f; //todo const
+        float jumpSpeed = 300.0f; // todo const
 
         _Float32 yAcceleration = 0.0f;
 
@@ -29,8 +29,8 @@ class Player : public sf::Drawable{
         /** sf::Drawable implementaion **/
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
-        void UpdatePhysics(_Float32);
-        void Update(_Float32);
+        void updatePhysics(_Float32);
+        void update(_Float32);
 };
 
 #endif

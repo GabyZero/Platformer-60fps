@@ -4,6 +4,7 @@
 #include "sceneinterface.hpp"
 #include "graphics/staticbackground.hpp"
 #include "player.hpp"
+#include "level.hpp"
 
 #include <forward_list>
 
@@ -13,11 +14,14 @@ class Scene : public SceneInterface{
         graphics::StaticBackground background;
         Player player;
 
+        Level level;
+
 
         Scene();
 
         void initScene();
-        void UpdatePhysics(_Float32);
+        void updatePhysics(_Float32);
+        void update(float);
         virtual void render(sf::RenderWindow &window);
 
         ~Scene();
