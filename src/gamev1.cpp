@@ -1,7 +1,6 @@
 #include "gamev1.hpp"
 
 #include <iostream>
-#include <chrono>
 
 Gamev1::Gamev1():Game()
 {}
@@ -9,9 +8,11 @@ Gamev1::Gamev1():Game()
 void Gamev1::run()
 {
     _Float32 dt = 1.0f / 60.0f; 
-    std::chrono::duration<_Float32> tmp_dt;
+    sf::Clock clock;
 
-    std::chrono::time_point begin_ticks = std::chrono::high_resolution_clock::now();
+    sf::Time begin = clock.getElapsedTime();
+
+    window.setFramerateLimit(60);
     while (window.isOpen())
     {
         sf::Event event;
@@ -32,13 +33,10 @@ void Gamev1::run()
         
         window.display();
 
-        std::chrono::time_point end_ticks = std::chrono::high_resolution_clock::now();
-        tmp_dt = std::chrono::duration_cast<std::chrono::duration<_Float32>>(end_ticks-begin_ticks);
+        sf::Time end = clock.getElapsedTime();
+        dt = (end-begin).asSeconds();
 
-
-        dt = tmp_dt.count();
-
-        begin_ticks = end_ticks;
+        begin = end;
 
         std::cout << 1.0f/dt << std::endl;
     }
