@@ -8,7 +8,6 @@ class Player : public sf::Drawable{
         float speed = 150.0f; //todo const
         float jumpSpeed = 300.0f; // todo const
 
-        _Float32 yAcceleration = 0.0f;
 
     public:
         /** attributes **/
@@ -19,6 +18,9 @@ class Player : public sf::Drawable{
         enum State { left, right, jump, iddle};
 
         State state;
+
+         _Float32 yAcceleration = 0.0f;
+
 
         /** constructor **/
 

@@ -11,7 +11,7 @@ sprite()
 void Player::initPlayer()
 {
     sprite.setTexture(resources::ResourcesManager::instance().textures.getAsset("player"));
-    sprite.setPosition(32,250);
+    sprite.setPosition(320,250);
     state = State::iddle;
 }
 

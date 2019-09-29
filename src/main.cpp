@@ -9,7 +9,7 @@ int main()
     //test->run();
     Game *test = new Gamev1();
     test->initGame();
-    //test.run();
+    test->run();
 
     delete test;
     exit(0);

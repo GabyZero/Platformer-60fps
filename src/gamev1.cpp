@@ -14,7 +14,7 @@ void Gamev1::run()
 
     sf::Time begin = clock.getElapsedTime();
 
-    window.setFramerateLimit(60);
+    window.setFramerateLimit(62);
     while (window.isOpen())
     {
         sf::Event event;
@@ -40,6 +40,6 @@ void Gamev1::run()
 
         begin = end;
 
-        //std::cout << 1.0f/dt << std::endl;
+        std::cout << 1.0f/dt << std::endl;
     }
 }
