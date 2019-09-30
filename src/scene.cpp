@@ -14,14 +14,22 @@ void Scene::initScene()
     level.initLevel();
 }
 
+/** return true if the collision test is relevent **/
+bool isCollisionTestRelevent(const sf::FloatRect &player, const sf::FloatRect &collidable)
+{
+    return true;
+}
+
 #include <iostream>
 
-void Scene::manageCollisions()
+void Scene::managePlayerCollisions()
 {
     sf::FloatRect rectP = player.sprite.getGlobalBounds();
     sf::FloatRect rectTmp;
     for(const sf::Sprite &sp : level.collidable) //todo: don't test * //
     {
+        if(!isCollisionTestRelevent(rectP, sp.getGlobalBounds())) continue;
+
         //std::cout << sp.getGlobalBounds().height << " " << sp.getGlobalBounds().width << std::endl;
         if(rectP.intersects(sp.getGlobalBounds(),rectTmp))
         {
@@ -33,12 +41,14 @@ void Scene::manageCollisions()
             {
                 player.sprite.setPosition(player.sprite.getPosition() + sf::Vector2(.0f,rectTmp.height*-1));
                 player.yAcceleration = .0f;
+                rectP = player.sprite.getGlobalBounds();
                 continue;
             }
-            else if(player.yAcceleration>.0f) //is the player jumping ?
+            else if(player.yAcceleration>.0f /*&& rectP.top-rectTmp.top > 16/2*/) //is the player jumping ?
             {
                 player.sprite.setPosition(player.sprite.getPosition() + sf::Vector2(.0f,rectTmp.height));
-                player.yAcceleration = -.1f;
+                player.stopJumping();
+                rectP = player.sprite.getGlobalBounds();
                 continue;
             }
 
@@ -46,11 +56,13 @@ void Scene::manageCollisions()
             if(rectTmp.left == sp.getPosition().x) //from the left
             {
                 player.sprite.setPosition(player.sprite.getPosition() + sf::Vector2(rectTmp.width*-1,.0f));
+                rectP = player.sprite.getGlobalBounds();
                 continue;
             }
             else
             {
                 player.sprite.setPosition(player.sprite.getPosition() + sf::Vector2(rectTmp.width,.0f));
+                rectP = player.sprite.getGlobalBounds();
                 continue;
             }
             
@@ -63,7 +75,7 @@ void Scene::updatePhysics(_Float32 dt)
     player.updatePhysics(dt);
     level.updatePhysics(dt);
 
-    manageCollisions();
+    managePlayerCollisions();
 }
 
 void Scene::update(float dt)

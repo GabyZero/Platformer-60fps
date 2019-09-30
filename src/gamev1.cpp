@@ -13,6 +13,7 @@ void Gamev1::run()
     sf::Clock clock;
 
     sf::Time begin = clock.getElapsedTime();
+    bool paused = false;
 
     window.setFramerateLimit(62);
     while (window.isOpen())
@@ -24,16 +25,21 @@ void Gamev1::run()
                 window.close();
         }
 
-        window.clear();
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::C)) paused = true;
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) paused = false;
+        if(!paused)
+        {
+            window.clear();
 
+            scene.update(dt);
+            scene.updatePhysics(1.0f / 60.0f);
 
-        scene.update(dt);
-        scene.updatePhysics(1.0f / 60.0f);
-
-        scene.render(window);
+            scene.render(window);
         
         
-        window.display();
+        
+            window.display();
+        }
 
         sf::Time end = clock.getElapsedTime();
         dt = (end-begin).asSeconds();

@@ -45,7 +45,7 @@ void Level::loadMap(const std::string path)
         }
         else
         {
-            std::cout << "["<<c<<"]"<<std::endl;
+            //std::cout << "["<<c<<"]"<<std::endl;
             x=0;
             y+=size;
         }       

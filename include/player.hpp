@@ -8,6 +8,8 @@ class Player : public sf::Drawable{
         float speed = 150.0f; //todo const
         float jumpSpeed = 300.0f; // todo const
 
+        float apexJumpTime = .0f;
+
 
     public:
         /** attributes **/
@@ -30,6 +32,8 @@ class Player : public sf::Drawable{
 
         /** sf::Drawable implementaion **/
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
+        void stopJumping();
 
         void updatePhysics(_Float32);
         void update(_Float32);

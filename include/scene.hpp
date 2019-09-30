@@ -20,7 +20,7 @@ class Scene : public SceneInterface{
         Scene();
 
         void initScene();
-        void manageCollisions();
+        void managePlayerCollisions();
         void updatePhysics(_Float32);
         void update(float);
         virtual void render(sf::RenderWindow &window);
