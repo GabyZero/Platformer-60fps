@@ -2,13 +2,60 @@
 
 #include "resources/resourcesmanager.hpp"
 #include <iostream>
+#include <fstream>
 
 Level::Level()
 {}
 
+void Level::loadMap(const std::string path)
+{
+    std::ifstream file(path, std::ifstream::in);
+    if(file.fail())
+    {
+        std::cerr << "Error while openning : " << path << std::endl;
+        exit(1);
+    }
+
+    int size = 16;
+    int x = 0, y = 0;
+
+    int id;
+    char c;
+    while(file.good())
+    {
+        file >> id;
+
+        if(id!=-1)
+        {
+            auto pair = resources::ResourcesManager::instance().mapTileSet.getAsset(id);
+            sf::Sprite sprite(resources::ResourcesManager::instance().textures.getAsset(pair.second),pair.first);
+            sprite.setPosition(x,y);
+            collidable.push_back(std::move(sprite));
+            
+            /*std::cout << "id:" << id << " (" << x << "," << y << ")";
+            std::cout << " => " << pair.second;
+            std::cout << "(" << pair.first.left << "," << pair.first.top << ")[" << pair.first.width << "x" << pair.first.height << "]";
+            std::cout << std::endl;*/ 
+        }
+        c = file.peek();
+        if(c==',')
+        {
+            file >> c;
+            x+=size;
+        }
+        else
+        {
+            std::cout << "["<<c<<"]"<<std::endl;
+            x=0;
+            y+=size;
+        }       
+    }
+}
+
 void Level::initLevel()
 {
-    sf::Sprite sprite(resources::ResourcesManager::instance().textures.getAsset("block"));
+    loadMap("resources/maps/map1.csv");
+    /*sf::Sprite sprite(resources::ResourcesManager::instance().textures.getAsset("block"));
     sprite.setPosition(255,200);
     collidable.push_back(std::move(sprite));
 
@@ -22,17 +69,17 @@ void Level::initLevel()
 
     sprite = sf::Sprite(sprite);
     sprite.setPosition(150,255);
-    collidable.push_back(std::move(sprite));
+    collidable.push_back(std::move(sprite));*/
     
     //** todo: ajout de 4 gros collidable autour du niveau
 }
 
-void Level::update(double dt)
+void Level::update(const double dt)
 {
 
 }
 
-void Level::updatePhysics(double dt)
+void Level::updatePhysics(const double dt)
 {
 
 }

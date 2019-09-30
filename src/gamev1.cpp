@@ -40,6 +40,6 @@ void Gamev1::run()
 
         begin = end;
 
-        std::cout << 1.0f/dt << std::endl;
+        //std::cout << 1.0f/dt << std::endl;
     }
 }

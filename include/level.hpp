@@ -11,10 +11,12 @@ class Level : public sf::Drawable{
         std::vector<sf::Sprite> others;
 
         Level();
+
+        void loadMap(const std::string path);
         void initLevel();
 
-        void update(double);
-        void updatePhysics(double);
+        void update(const double);
+        void updatePhysics(const double);
 
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
         

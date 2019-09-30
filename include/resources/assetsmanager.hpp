@@ -6,10 +6,10 @@
 
 namespace resources{
     
-    template<typename TASSET>
+    template<typename KEY, typename TASSET>
     class AssetsManager{
         private:
-            std::unordered_map<std::string, TASSET> assets;
+            std::unordered_map<KEY, TASSET> assets;
 
             class AssetsManagerException : public std::exception{
                 virtual const char* what() const throw()
@@ -21,13 +21,13 @@ namespace resources{
         public:
             AssetsManager(){}
 
-            void addAsset(const std::string & id, TASSET asset)
+            void addAsset(const KEY & id, TASSET asset)
             {
                 if(!assets.emplace(id, asset).second)
                     throw AssetsManagerException();
             }
 
-            const TASSET& getAsset(const std::string id) const
+            const TASSET& getAsset(const KEY id) const
             {
                 return assets.at(id);
             }

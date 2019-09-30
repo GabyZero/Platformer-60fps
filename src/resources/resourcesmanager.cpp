@@ -30,6 +30,10 @@ namespace resources{
             texture = sf::Texture();
             texture.loadFromFile(path+"block.png");
             textures.addAsset("block",texture);
+
+            texture = sf::Texture();
+            texture.loadFromFile("resources/maps/tileset_1.png");
+            textures.addAsset("tileset1",texture);
         }catch(std::exception e)
         {
             std::cerr << e.what() << std::endl;
@@ -37,9 +41,38 @@ namespace resources{
         }
     }
 
+    void ResourcesManager::loadTileSet()
+    {
+        /* first */
+        int width = 112, height = 96;
+        int size = 16;
+        
+        int id = 0;
+        std::pair<sf::IntRect, std::string> pair;
+        for(int y = 0 ; y < height; y += size)
+        {
+            for(int x = 0 ; x < width ; x += size)
+            {
+                pair = std::pair(sf::IntRect(x,y,size,size), "tileset1");
+                mapTileSet.addAsset(id++, pair);
+            }
+        }
+
+        /* second same size */
+        for(int y = 0 ; y < height; y += size)
+        {
+            for(int x = 0 ; x < width ; x += size)
+            {
+                pair = std::pair(sf::IntRect(x,y,size,size), "tileset2");
+                mapTileSet.addAsset(id++, pair);
+            }
+        }
+    }
+
     void ResourcesManager::loadResources()
     {
         loadTextures();
+        loadTileSet();
     }
 
 }

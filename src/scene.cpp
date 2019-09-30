@@ -22,7 +22,7 @@ void Scene::manageCollisions()
     sf::FloatRect rectTmp;
     for(const sf::Sprite &sp : level.collidable) //todo: don't test * //
     {
-        std::cout << sp.getGlobalBounds().height << " " << sp.getGlobalBounds().width << std::endl;
+        //std::cout << sp.getGlobalBounds().height << " " << sp.getGlobalBounds().width << std::endl;
         if(rectP.intersects(sp.getGlobalBounds(),rectTmp))
         {
             std::cout << rectTmp.left << " " << rectTmp.top << " " <<

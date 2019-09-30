@@ -6,8 +6,8 @@
 #include "scene.hpp"
 
 #define _FPS 60
-#define _WIDTH 800
-#define _HEIGHT 800
+#define _WIDTH 400
+#define _HEIGHT 400
 #define _GAMENAME "Plaformer random v0"
 
 /**

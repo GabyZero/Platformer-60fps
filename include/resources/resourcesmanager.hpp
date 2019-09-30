@@ -16,8 +16,12 @@ namespace resources{
             static ResourcesManager& instance();
 
             void loadResources();
+            void loadTileSet();
 
-            AssetsManager<sf::Texture> textures;            
+            AssetsManager<std::string, sf::Texture> textures;  
+
+            /** id => pair rect, tileset name **/
+            AssetsManager<int, std::pair<sf::IntRect,std::string>> mapTileSet;          
 
 
     };
