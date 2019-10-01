@@ -11,6 +11,7 @@ class Player : public sf::Drawable{
         float apexJumpTime = .0f;
 
 
+
     public:
         /** attributes **/
 
@@ -22,6 +23,7 @@ class Player : public sf::Drawable{
         State state;
 
          _Float32 yAcceleration = 0.0f;
+        bool canJump = false;
 
 
         /** constructor **/

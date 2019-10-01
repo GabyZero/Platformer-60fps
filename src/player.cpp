@@ -54,8 +54,9 @@ void Player::update(_Float32 dt)
     {
         sprite.setPosition(sprite.getPosition().x+(speed*dt), sprite.getPosition().y);
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && yAcceleration == 0)
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && canJump)
     {
         yAcceleration += jumpSpeed;
+        canJump = false;
     }
 }
