@@ -35,35 +35,39 @@ void Scene::managePlayerCollisions()
         {
             std::cout << rectTmp.left << " " << rectTmp.top << " " <<
             rectTmp.height << " " << rectTmp.width << std::endl;
-            
-            //top or down
-            if(rectTmp.top == sp.getPosition().y && player.yAcceleration <.0f) //is the player falling ?
+            if(rectTmp.width>rectTmp.height)
             {
-                player.sprite.setPosition(player.sprite.getPosition() + sf::Vector2(.0f,rectTmp.height*-1));
-                player.yAcceleration = .0f;
-                rectP = player.sprite.getGlobalBounds();
-                continue;
-            }
-            else if(player.yAcceleration>.0f /*&& rectP.top-rectTmp.top > 16/2*/) //is the player jumping ?
-            {
-                player.sprite.setPosition(player.sprite.getPosition() + sf::Vector2(.0f,rectTmp.height));
-                player.stopJumping();
-                rectP = player.sprite.getGlobalBounds();
-                continue;
-            }
-
-            //left or right 
-            if(rectTmp.left == sp.getPosition().x) //from the left
-            {
-                player.sprite.setPosition(player.sprite.getPosition() + sf::Vector2(rectTmp.width*-1,.0f));
-                rectP = player.sprite.getGlobalBounds();
-                continue;
+                //top or down
+                if(rectTmp.top == sp.getPosition().y && player.yAcceleration <.0f) //is the player falling ?
+                {
+                    player.sprite.setPosition(player.sprite.getPosition() + sf::Vector2(.0f,rectTmp.height*-1));
+                    player.yAcceleration = .0f;
+                    rectP = player.sprite.getGlobalBounds();
+                    continue;
+                }
+                else if(player.yAcceleration>.0f /*&& rectP.top-rectTmp.top > 16/2*/) //is the player jumping ?
+                {
+                    player.sprite.setPosition(player.sprite.getPosition() + sf::Vector2(.0f,rectTmp.height));
+                    player.stopJumping();
+                    rectP = player.sprite.getGlobalBounds();
+                    continue;
+                }
             }
             else
             {
-                player.sprite.setPosition(player.sprite.getPosition() + sf::Vector2(rectTmp.width,.0f));
-                rectP = player.sprite.getGlobalBounds();
-                continue;
+                //left or right 
+                if(rectTmp.left == sp.getPosition().x) //from the left
+                {
+                    player.sprite.setPosition(player.sprite.getPosition() + sf::Vector2(rectTmp.width*-1,.0f));
+                    rectP = player.sprite.getGlobalBounds();
+                    continue;
+                }
+                else
+                {
+                    player.sprite.setPosition(player.sprite.getPosition() + sf::Vector2(rectTmp.width,.0f));
+                    rectP = player.sprite.getGlobalBounds();
+                    continue;
+                }
             }
             
         }
