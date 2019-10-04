@@ -3,9 +3,16 @@
 #include "resources/resourcesmanager.hpp"
 #include <iostream>
 #include <fstream>
+#include "block.hpp"
 
 Level::Level()
 {}
+
+Level::~Level()
+{
+    for(physics::ICollidable *col : collidable)
+        delete col;
+}
 
 void Level::loadMap(const std::string path)
 {
@@ -28,14 +35,16 @@ void Level::loadMap(const std::string path)
         if(id!=-1)
         {
             auto pair = resources::ResourcesManager::instance().mapTileSet.getAsset(id);
-            sf::Sprite sprite(resources::ResourcesManager::instance().textures.getAsset(pair.second),pair.first);
-            sprite.setPosition(x,y);
-            collidable.push_back(std::move(sprite));
+            //sf::Sprite sprite(resources::ResourcesManager::instance().textures.getAsset(pair.second),pair.first);
+            Block* block = new Block(pair.first,resources::ResourcesManager::instance().textures.getAsset(pair.second));
+            block->setPosition(x,y);
+            //sprite.setPosition(x,y);
+            collidable.push_back(block);
             
-            /*std::cout << "id:" << id << " (" << x << "," << y << ")";
+            std::cout << "id:" << id << " (" << x << "," << y << ")";
             std::cout << " => " << pair.second;
             std::cout << "(" << pair.first.left << "," << pair.first.top << ")[" << pair.first.width << "x" << pair.first.height << "]";
-            std::cout << std::endl;*/ 
+            std::cout << std::endl;
         }
         c = file.peek();
         if(c==',')
@@ -74,20 +83,20 @@ void Level::initLevel()
     //** todo: ajout de 4 gros collidable autour du niveau
 }
 
-void Level::update(const double dt)
+void Level::update(const double)
 {
 
 }
 
-void Level::updatePhysics(const double dt)
+void Level::updatePhysics(const double)
 {
 
 }
 
 void Level::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    for(sf::Sprite sp : collidable)
-        target.draw(sp, states);
+    for(physics::ICollidable *col : collidable)
+        target.draw(*col, states);
 
     for(sf::Sprite sp : others)
         target.draw(sp, states);

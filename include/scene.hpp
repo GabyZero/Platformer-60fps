@@ -5,6 +5,7 @@
 #include "graphics/staticbackground.hpp"
 #include "player.hpp"
 #include "level.hpp"
+#include "physics/icollidable.hpp"
 
 #include <forward_list>
 

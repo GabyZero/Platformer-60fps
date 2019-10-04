@@ -24,21 +24,20 @@ bool isCollisionTestRelevent(const sf::FloatRect &player, const sf::FloatRect &c
 
 void Scene::managePlayerCollisions()
 {
-    sf::FloatRect rectP = player.sprite.getGlobalBounds();
+    sf::FloatRect rectP;
     sf::FloatRect rectTmp;
 
-    sf::FloatRect rectAvg(.0f,.0f,.0f,.0f);
-    float cptRect=0;
-    for(const sf::Sprite &sp : level.collidable) //todo: don't test * //
+    for(const physics::ICollidable *col : level.collidable) //todo: don't test * //
     {
-        if(!isCollisionTestRelevent(rectP, sp.getGlobalBounds())) continue;
+        rectP = player.sprite.getGlobalBounds();
+        if(!isCollisionTestRelevent(rectP, col->getGlobalBounds())) continue;
 
         //
         // TODO: moyenne des rect
         //
 
         //std::cout << sp.getGlobalBounds().height << " " << sp.getGlobalBounds().width << std::endl;
-        if(rectP.intersects(sp.getGlobalBounds(),rectTmp))
+        if(rectP.intersects(col->getGlobalBounds(),rectTmp))
         {
             //std::cout << rectTmp.left << " " << rectTmp.top << " " <<
             //rectTmp.height << " " << rectTmp.width << std::endl;
@@ -49,42 +48,7 @@ void Scene::managePlayerCollisions()
             rectAvg.left   += rectTmp.left;
 
             cptRect ++;*/
-
-            if(rectTmp.width>rectTmp.height)
-            {
-                //top or down
-                if(rectTmp.top == sp.getPosition().y && player.yAcceleration <.0f) //is the player falling ?
-                {
-                    player.sprite.setPosition(player.sprite.getPosition() + sf::Vector2(.0f,rectTmp.height*-1));
-                    player.yAcceleration = .0f;
-                    player.canJump = true;
-                    rectP = player.sprite.getGlobalBounds();
-                    continue;
-                }
-                else if(player.yAcceleration>.0f) //is the player jumping ?
-                {
-                    player.sprite.setPosition(player.sprite.getPosition() + sf::Vector2(.0f,rectTmp.height));
-                    player.stopJumping();
-                    rectP = player.sprite.getGlobalBounds();
-                    continue;
-                }
-            }
-            else
-            {
-                //left or right 
-                if(rectTmp.left == sp.getPosition().x) //from the left
-                {
-                    player.sprite.setPosition(player.sprite.getPosition() + sf::Vector2(rectTmp.width*-1,.0f));
-                    rectP = player.sprite.getGlobalBounds();
-                    continue;
-                }
-                else
-                {
-                    player.sprite.setPosition(player.sprite.getPosition() + sf::Vector2(rectTmp.width,.0f));
-                    rectP = player.sprite.getGlobalBounds();
-                    continue;
-                }
-            }
+            player.collisionEnter(*col, rectTmp);
             
         }
     } //foreach collidable

@@ -3,14 +3,16 @@
 
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include <physics/icollidable.hpp>
 
 class Level : public sf::Drawable{
     public:
-        std::vector<sf::Sprite> collidable;
+        std::vector<physics::ICollidable*> collidable;
 
         std::vector<sf::Sprite> others;
 
         Level();
+        ~Level();
 
         void loadMap(const std::string path);
         void initLevel();

@@ -2,12 +2,13 @@
 #define PLAYER_HPP
 
 #include <SFML/Graphics.hpp>
+#include "physics/icollidable.hpp"
 
-class Player : public sf::Drawable{
+class Player : public physics::ICollidable{
     private:
         float speed = 150.0f; //todo const
-        float jumpSpeed = 300.0f; // todo const
-
+        float jumpSpeed = 300.0f ; // todo const
+        //TODO: max velocity
         float apexJumpTime = .0f;
 
 
@@ -34,6 +35,12 @@ class Player : public sf::Drawable{
 
         /** sf::Drawable implementaion **/
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
+        /** ICollidable implementation **/
+        virtual void collisionEnter(const ICollidable &collidable, sf::FloatRect collision);
+        virtual const sf::Vector2f& getPosition() const;
+        virtual sf::FloatRect getGlobalBounds() const;
+
 
         void stopJumping();
 
