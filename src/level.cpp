@@ -1,6 +1,7 @@
 #include "level.hpp"
 
 #include "resources/resourcesmanager.hpp"
+#include "resources/RSJparser.tcc"
 #include <iostream>
 #include <fstream>
 #include "block.hpp"
@@ -17,7 +18,43 @@ Level::~Level()
 void Level::loadMap(const std::string path)
 {
     std::ifstream file(path, std::ifstream::in);
-    if(file.fail())
+    std::istream* stream = &file;
+
+    RSJresource rsc = (*stream);
+
+    
+    for(int i = 0;;i++)
+    {
+        if(rsc["layers"][i]["name"].as<std::string>() == "collider")
+        {
+            int size = rsc["tileheight"].as<int>();
+            int width = rsc["layers"][i]["width"].as<int>();
+            int height = rsc["layers"][i]["height"].as<int>();
+
+            int x = 0, y = 0;
+
+            for(int h=0;h<height;++h)
+            {
+                for(int w=0;w<width;++w)
+                {
+                    int id = rsc["layers"][i]["data"][h*width+w].as<int>()-1;
+                    if(id>=0)
+                    {
+                        auto pair = resources::ResourcesManager::instance().mapTileSet.getAsset(id);
+                        Block* block = new Block(pair.first,resources::ResourcesManager::instance().textures.getAsset(pair.second));
+                        block->setPosition(x,y);
+                        collidable.push_back(block);
+                    }
+                    x+=size;
+                }
+                y+=size;
+                x=0;
+            }
+            break;
+        }
+    }
+
+    /*if(file.fail())
     {
         std::cerr << "Error while openning : " << path << std::endl;
         exit(1);
@@ -58,12 +95,12 @@ void Level::loadMap(const std::string path)
             x=0;
             y+=size;
         }       
-    }
+    }*/
 }
 
 void Level::initLevel()
 {
-    loadMap("resources/maps/map1.csv");
+    loadMap("resources/maps/map1.json");
     /*sf::Sprite sprite(resources::ResourcesManager::instance().textures.getAsset("block"));
     sprite.setPosition(255,200);
     collidable.push_back(std::move(sprite));
