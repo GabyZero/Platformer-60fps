@@ -17,6 +17,7 @@ class Game{
     
     protected:      
         sf::RenderWindow window;
+        sf::View view;
         Scene scene;
 
     public:

@@ -4,9 +4,11 @@
 
 
 Game::Game():
-window(sf::VideoMode(_WIDTH, _HEIGHT), _GAMENAME, sf::Style::Titlebar|sf::Style::Close)
+window(sf::VideoMode(_WIDTH, _HEIGHT), _GAMENAME, sf::Style::Titlebar|sf::Style::Close),
+view(sf::FloatRect(0,0,250,250))
 {
     resources::ResourcesManager::instance().loadResources();
+    window.setView(view);   
 }
 
 void Game::initGame()

@@ -34,10 +34,10 @@ void Gamev1::run()
             scene.update(dt);
             scene.updatePhysics(1.0f / 60.0f);
 
-            scene.render(window);
-        
-        
-        
+            view.setCenter(scene.player.getPosition());
+            window.setView(view);
+
+            scene.render(window);    
             window.display();
         }
 

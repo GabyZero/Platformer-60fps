@@ -17,7 +17,8 @@ void Scene::initScene()
 /** return true if the collision test is relevent **/
 bool isCollisionTestRelevent(const sf::FloatRect &player, const sf::FloatRect &collidable)
 {
-    return true;
+    return std::abs(player.top - collidable.top) < 16 
+        && std::abs(player.left - collidable.left) <16;
 }
 
 #include <iostream>
@@ -31,10 +32,6 @@ void Scene::managePlayerCollisions()
     {
         rectP = player.sprite.getGlobalBounds();
         if(!isCollisionTestRelevent(rectP, col->getGlobalBounds())) continue;
-
-        //
-        // TODO: moyenne des rect
-        //
 
         //std::cout << sp.getGlobalBounds().height << " " << sp.getGlobalBounds().width << std::endl;
         if(rectP.intersects(col->getGlobalBounds(),rectTmp))
