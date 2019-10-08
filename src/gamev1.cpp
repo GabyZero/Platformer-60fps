@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#define FPS 10.0f
+
 Gamev1::Gamev1():Game()
 {}
 
@@ -9,13 +11,13 @@ Gamev1::~Gamev1(){}
 
 void Gamev1::run()
 {
-    _Float32 dt = 1.0f / 60.0f; 
+    _Float32 dt = 1.0f / FPS; 
     sf::Clock clock;
 
     sf::Time begin = clock.getElapsedTime();
     bool paused = false;
 
-    window.setFramerateLimit(62);
+    window.setFramerateLimit(FPS);
     while (window.isOpen())
     {
         sf::Event event;
@@ -26,13 +28,15 @@ void Gamev1::run()
         }
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::C)) paused = true;
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) paused = false;
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::V)) paused = false;
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) break;
+
         if(!paused)
         {
             window.clear();
 
             scene.update(dt);
-            scene.updatePhysics(1.0f / 60.0f);
+            scene.updatePhysics(1.0f / FPS);
 
             view.setCenter(scene.player.getPosition());
             window.setView(view);
