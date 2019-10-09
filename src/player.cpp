@@ -1,5 +1,7 @@
 #include "player.hpp"
+
 #include <iostream>
+#include <algorithm>
 
 #include "resources/resourcesmanager.hpp"
 #include "physics/icollidable.hpp"
@@ -56,6 +58,7 @@ void Player::collisionEnter(const physics::ICollidable &collidable, sf::FloatRec
             sprite.setPosition(sprite.getPosition() + sf::Vector2(collision.width, .0f));
         }
     }
+    
 }
 
 const sf::Vector2f& Player::getPosition() const
@@ -87,6 +90,8 @@ void Player::updatePhysics(_Float32 dt)
         }
         yAcceleration -= jumpSpeed * dt * 2; //TODO gravity
     }
+    yAcceleration = std::clamp(yAcceleration*dt, -16.0f, 16.0f)/dt;
+    //std::cout << "yAccel = " << yAcceleration << std::endl;
 }
 
 void Player::update(_Float32 dt)

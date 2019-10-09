@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#define FPS 10.0f
+#define FPS 60.0f
 
 Gamev1::Gamev1():Game()
 {}
@@ -17,6 +17,8 @@ void Gamev1::run()
     sf::Time begin = clock.getElapsedTime();
     bool paused = false;
 
+    int fpf = 0;
+
     window.setFramerateLimit(FPS);
     while (window.isOpen())
     {
@@ -30,9 +32,10 @@ void Gamev1::run()
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::C)) paused = true;
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::V)) paused = false;
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) break;
-
-        if(!paused)
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::B)) fpf=0;
+        if(!paused && fpf<1)
         {
+            //fpf++;
             window.clear();
 
             scene.update(dt);
@@ -49,7 +52,7 @@ void Gamev1::run()
         dt = (end-begin).asSeconds();
 
         begin = end;
-
+        //paused = true;
         //std::cout << 1.0f/dt << std::endl;
     }
 }
