@@ -9,13 +9,13 @@ Gamev1::~Gamev1(){}
 
 void Gamev1::run()
 {
-    _Float32 dt = 1.0f / 60.0f; 
+    _Float32 dt = 1.0f / _FPS; 
     sf::Clock clock;
 
     sf::Time begin = clock.getElapsedTime();
     bool paused = false;
 
-    window.setFramerateLimit(62);
+    window.setFramerateLimit(_FPS+2);
     while (window.isOpen())
     {
         sf::Event event;
@@ -32,7 +32,7 @@ void Gamev1::run()
             window.clear();
 
             scene.update(dt);
-            scene.updatePhysics(1.0f / 60.0f);
+            scene.updatePhysics(1.0f / _FPS);
 
             view.setCenter(scene.player.getPosition());
             window.setView(view);
@@ -46,6 +46,6 @@ void Gamev1::run()
 
         begin = end;
 
-        //std::cout << 1.0f/dt << std::endl;
+        std::cout << 1.0f/dt << std::endl;
     }
 }

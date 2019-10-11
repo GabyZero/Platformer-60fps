@@ -24,8 +24,9 @@ namespace resources{
             textures.addAsset("player",texture);
 
             texture = sf::Texture();
-            texture.loadFromFile(path+"background.png");
-            textures.addAsset("background",texture);
+            texture.loadFromFile(path+"sky.jpg");
+            texture.setRepeated(true);
+            textures.addAsset("sky",texture);
 
             texture = sf::Texture();
             texture.loadFromFile(path+"block.png");

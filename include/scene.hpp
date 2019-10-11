@@ -9,16 +9,19 @@
 
 #include <forward_list>
 
+class Game;
+
 class Scene : public SceneInterface{
+    private:
+        Game& game;
     public:
-        //std::forward_list<std::sf::Drawable> static_elements;
         graphics::StaticBackground background;
         Player player;
 
         Level level;
 
 
-        Scene();
+        Scene(Game &game);
 
         void initScene();
         void managePlayerCollisions();

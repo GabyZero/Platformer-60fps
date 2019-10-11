@@ -1,17 +1,20 @@
 #include "scene.hpp"
 
 #include "resources/resourcesmanager.hpp"
+#include <iostream>
 
-Scene::Scene()
+Scene::Scene(Game &_game):
+game(_game),
+level(game)
 {
 
 }
 
 void Scene::initScene()
 {
-    background.setImage(resources::ResourcesManager::instance().textures.getAsset("background"));
     player.initPlayer();
     level.initLevel();
+    //std::cout << "test : " << player.sprite.getPosition().x << " " << player.sprite.getPosition().x << std::endl;
 }
 
 /** return true if the collision test is relevent **/
