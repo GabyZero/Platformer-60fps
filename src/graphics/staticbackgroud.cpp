@@ -24,7 +24,7 @@ void StaticBackground::setSize(const int &height, const int &width)
 void StaticBackground::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(sprite, states);
-    std::cout << "test : " << sprite.getTextureRect().top << " " << sprite.getTextureRect().left << std::endl;
+    //std::cout << "test : " << sprite.getTextureRect().top << " " << sprite.getTextureRect().left << std::endl;
 }
 
 StaticBackground::~StaticBackground()

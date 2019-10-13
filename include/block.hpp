@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "physics/icollidable.hpp"
+#include "game.hpp"
 
 class Block : public physics::ICollidable
 {

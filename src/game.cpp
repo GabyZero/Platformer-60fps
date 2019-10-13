@@ -5,7 +5,7 @@
 
 Game::Game():
 window(sf::VideoMode(_WIDTH, _HEIGHT), _GAMENAME, sf::Style::Titlebar|sf::Style::Close),
-view(sf::FloatRect(0,0,250,250)),
+view(sf::FloatRect(0,0,_CAMERA_WIDTH,_CAMERA_HEIGHT)),
 scene(*this)
 {
     resources::ResourcesManager::instance().loadResources();

@@ -3,6 +3,8 @@
 Block::Block(sf::IntRect& rect,const sf::Texture &text):
 sprite(text, rect)
 {
+    sprite.setScale(_TILE_WIDTH/rect.width,_TILE_HEIGHT/rect.height);
+    
 }
 
 void Block::setPosition(float x, float y)

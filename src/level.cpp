@@ -28,19 +28,20 @@ void Level::loadMap(const std::string path)
     {
         if(rsc["layers"][i]["name"].as<std::string>() == "collider")
         {
-            int size = rsc["tileheight"].as<int>();
+            int size = _TILE_HEIGHT;//rsc["tileheight"].as<int>();
             int width = rsc["layers"][i]["width"].as<int>();
             int height = rsc["layers"][i]["height"].as<int>();
 
             game.scene.player.sprite.setPosition(rsc["properties"]["player_pos_x"].as<int>()*size, rsc["properties"]["player_pos_y"].as<int>()*size);
 
+            /** manage background */
             sf::FloatRect rect;
             rect.height = height;
             rect.width = width;
 
             game.scene.background.setImage(resources::ResourcesManager::instance().textures.getAsset(rsc["properties"]["background"].as<std::string>()));
             game.scene.background.setSize(width*size+(2*_CAMERA_WIDTH), height*size+(2*_CAMERA_HEIGHT));
-
+            /* end background */
 
             int x = 0, y = 0;
 
