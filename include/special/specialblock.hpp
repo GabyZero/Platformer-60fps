@@ -1,25 +1,42 @@
 #ifndef SPECIALBLOCK_HPP
 #define SPECIALBLOCK_HPP
 
-#include "physics/icollidable.hpp"
+#include <SFML/Graphics.hpp>
+
+#include "graphics/animation.hpp"
 #include "special/icomportment.hpp"
+#include "physics/icollidable.hpp"
+#include "block.hpp"
+#include "animatedblock.hpp"
 
 namespace special{
 
 /** Collidable block with special comportment **/
-class SpecialBlock : public physics::ICollidable{
+template<class TBLOC>
+class SpecialBlock : public TBLOC{
     private:
         IComportment& comportment;
-        sf::Sprite sprite;
     
     public:
-        SpecialBlock(sf::Sprite,IComportment&);
+        /** constructor for animated block **/
+        SpecialBlock(const graphics::Animation& _animation, IComportment& _comportment):
+    AnimatedBlock(_animation),comportment(_comportment)
+    {
+    }
+
+
+        /** constructor for block not animated **/
+        SpecialBlock(sf::IntRect &_rect, const sf::Texture & _text,IComportment& _comportment):
+    Block(_rect,_text),comportment(_comportment)
+    {
+
+    }
 
         /** ICollidable implementation **/
-        virtual void collisionEnter(const ICollidable &collidable, sf::FloatRect collision) = 0;
-        virtual const sf::Vector2f& getPosition() const  = 0 ;
-        virtual sf::FloatRect getGlobalBounds() const = 0 ;
-        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
+        virtual void collisionEnter(const physics::ICollidable &collidable, sf::FloatRect collision)
+    {
+        comportment(collidable, collision);
+    }
         /** end ICollidable **/
 };
 }

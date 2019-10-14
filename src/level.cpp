@@ -15,6 +15,9 @@ Level::~Level()
 {
     for(physics::ICollidable *col : collidable)
         delete col;
+
+    for(physics::ICollidable *col : trigerrable)
+        delete col;
 }
 
 void Level::loadMap(const std::string path)
@@ -132,9 +135,12 @@ void Level::initLevel()
     //** todo: ajout de 4 gros collidable autour du niveau
 }
 
-void Level::update(const double)
+void Level::update(const double dt)
 {
-
+    for(physics::ICollidable *col : collidable)
+        col->update(dt);    
+    for(physics::ICollidable *col : trigerrable)
+        col->update(dt);
 }
 
 void Level::updatePhysics(const double)
@@ -145,6 +151,9 @@ void Level::updatePhysics(const double)
 void Level::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     for(physics::ICollidable *col : collidable)
+        target.draw(*col, states);
+
+    for(physics::ICollidable *col : trigerrable)
         target.draw(*col, states);
 
     for(sf::Sprite sp : others)

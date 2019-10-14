@@ -12,6 +12,7 @@ class Level : public sf::Drawable{
         Game &game;
     public:
         std::vector<physics::ICollidable*> collidable;
+        std::vector<physics::ICollidable*> trigerrable;
 
         std::vector<sf::Sprite> others;
 
