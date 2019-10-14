@@ -6,7 +6,7 @@
 
 namespace graphics{
 
-class AnimatedSprite : public sf::Drawable {
+class AnimatedSprite : public sf::Sprite{
     private:
         const Animation& animation;
 
@@ -15,12 +15,7 @@ class AnimatedSprite : public sf::Drawable {
 
 
     public:
-        sf::Sprite sprite;
-
         explicit AnimatedSprite(const Animation&);
-
-        /** sf::Drawable implementaion **/
-        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
         /** update the frame to the current frame, called by update **/
         void updateSprite();

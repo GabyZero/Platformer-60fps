@@ -21,7 +21,7 @@ void Gamev1::run()
     window.setFramerateLimit(_FPS+2);
 
     graphics::AnimatedSprite test(resources::ResourcesManager::instance().animations.getAsset("fire"));
-    test.sprite.setPosition(scene.player.getPosition()+sf::Vector2f{20,0});
+    test.setPosition(scene.player.getPosition()+sf::Vector2f{20,0});
 
     while (window.isOpen())
     {

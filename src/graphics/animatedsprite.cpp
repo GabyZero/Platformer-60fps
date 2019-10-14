@@ -8,13 +8,13 @@ animation(_animation)
 {
     currentFrame = 0;
     clock = sf::seconds(0);
-    sprite.setTexture(animation.texture);
+    setTexture(animation.texture);
     updateSprite(); //initialize the sprite
 }
 
 void AnimatedSprite::updateSprite()
 {
-    sprite.setTextureRect({animation.width*currentFrame,0,animation.width,animation.height}); // todo: add offset
+    setTextureRect({animation.width*currentFrame,0,animation.width,animation.height}); // todo: add offset
 }
 
 void AnimatedSprite::update(float dt)
@@ -48,9 +48,9 @@ void AnimatedSprite::update(float dt)
     }
 }
 
-void AnimatedSprite::draw(sf::RenderTarget& target, sf::RenderStates states) const
+/*void AnimatedSprite::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    target.draw(sprite, states);
-}
+    target.draw(*this, states);
+}*/
 
 } // namespace graphics
