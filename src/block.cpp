@@ -34,4 +34,4 @@ sf::FloatRect Block::getGlobalBounds() const
     return sprite.getGlobalBounds();
 }
 
-/** en icollidable **/
+/** end icollidable **/
