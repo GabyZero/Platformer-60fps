@@ -17,7 +17,6 @@ void Gamev1::run()
     window.setFramerateLimit(_FPS+2);
     
     sf::Time begin = clock.getElapsedTime();
-
     while (window.isOpen())
     {
         sf::Event event;
@@ -30,8 +29,10 @@ void Gamev1::run()
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::C)) paused = true;
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::V)) paused = false;
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) break;
-        if(!paused)
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::B)) fpf=0;
+        if(!paused && fpf<1)
         {
+            //fpf++;
             window.clear();
 
             scene.update(dt);
@@ -48,6 +49,7 @@ void Gamev1::run()
         dt = (end-begin).asSeconds();
 
         begin = end;
+
         std::cout << 1.0f/dt << std::endl;
     }
 }
