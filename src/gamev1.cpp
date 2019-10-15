@@ -29,10 +29,8 @@ void Gamev1::run()
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::C)) paused = true;
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::V)) paused = false;
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) break;
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::B)) fpf=0;
-        if(!paused && fpf<1)
+        if(!paused)
         {
-            //fpf++;
             window.clear();
 
             scene.update(dt);
