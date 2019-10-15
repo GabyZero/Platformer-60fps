@@ -8,13 +8,19 @@
 #include "special/specialblock.hpp"
 #include "special/icomportment.hpp"
 
+#include "event.hpp"
+
 class duchmol : public special::IComportment
 {
-    virtual void operator()(const physics::ICollidable &collidable, sf::FloatRect collision)
-    {
-        std::cout << "wesh alors " << std::endl;
-    }
-
+   using special::IComportment::IComportment;
+    public:
+        Event event;
+        duchmol(Game &game):IComportment(game){event.type = Event::EventType::PLAYER_DAMAGE;event.playerDamage.damage = 10;}
+        virtual void operator()(const physics::ICollidable &collidable, sf::FloatRect collision)
+        {
+            std::cout << "wesh alors " << std::endl;
+            game.addEvent(event);
+        }
 };
 
 Scene::Scene(Game &_game):
@@ -28,7 +34,7 @@ void Scene::initScene()
     player.initPlayer();
     level.initLevel();
     //std::cout << "test : " << player.sprite.getPosition().x << " " << player.sprite.getPosition().x << std::endl;
-    special::SpecialBlock<AnimatedBlock> *test = new special::SpecialBlock<AnimatedBlock>(resources::ResourcesManager::instance().animations.getAsset("fire"), *new duchmol());
+    special::SpecialBlock<AnimatedBlock> *test = new special::SpecialBlock<AnimatedBlock>(resources::ResourcesManager::instance().animations.getAsset("fire"), *new duchmol(game));
     test->setPosition(player.getPosition().x + 20 , player.getPosition().y);
     level.trigerrable.push_back(test);
 }
@@ -53,9 +59,9 @@ void Scene::managePlayerCollisions()
         //std::cout << sp.getGlobalBounds().height << " " << sp.getGlobalBounds().width << std::endl;
         if(rectP.intersects(col->getGlobalBounds(),rectTmp))
         {
-            std::cout << col->getGlobalBounds().left << " " << col->getGlobalBounds().top << std::endl;
+            /*std::cout << col->getGlobalBounds().left << " " << col->getGlobalBounds().top << std::endl;
             std::cout << rectTmp.left << " " << rectTmp.top << " " <<
-            rectTmp.height << " " << rectTmp.width << std::endl;
+            rectTmp.height << " " << rectTmp.width << std::endl;*/
 
             player.collisionEnter(*col, rectTmp);
             col->collisionEnter(player, rectTmp);        

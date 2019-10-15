@@ -26,6 +26,7 @@ class Player : public physics::ICollidable{
          _Float32 yAcceleration = 0.0f;
         bool canJump = false;
 
+        int life, maxLife;
 
         /** constructor **/
 

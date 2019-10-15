@@ -33,6 +33,8 @@ void Gamev1::run()
         {
             window.clear();
 
+            manageEvents();
+
             scene.update(dt);
             scene.updatePhysics(1.0f / _FPS);
 

@@ -5,9 +5,12 @@
 
 #include "resources/resourcesmanager.hpp"
 #include "physics/icollidable.hpp"
+#include "game.hpp"
 
 Player::Player() : sprite()
 {
+    life=_PLAYER_MAXLIFE;
+    maxLife=_PLAYER_MAXLIFE;
 }
 
 void Player::initPlayer()
@@ -110,4 +113,6 @@ void Player::update(_Float32 dt)
         yAcceleration = jumpSpeed;
         canJump = false;
     }
+
+    std::cout << "Life : " << life << std::endl;
 }
