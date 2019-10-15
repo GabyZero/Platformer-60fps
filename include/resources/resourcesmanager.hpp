@@ -1,6 +1,7 @@
 #ifndef RESSOURCESMANAGER_HPP
 #define RESSOURCESMANAGER_HPP
 
+#include "graphics/animation.hpp"
 #include "assetsmanager.hpp"
 
 namespace resources{
@@ -9,16 +10,20 @@ namespace resources{
             ResourcesManager();
 
             void loadTextures();
-
+            void loadTileSet();
+            void loadAnimation();
         public:
 
             /** static instance in the method **/
             static ResourcesManager& instance();
 
             void loadResources();
-            void loadTileSet();
 
-            AssetsManager<std::string, sf::Texture> textures;  
+
+            AssetsManager<std::string, sf::Texture> textures;
+
+            /**name => animation **/
+            AssetsManager<std::string, graphics::Animation> animations;
 
             /** id => pair rect, tileset name **/
             AssetsManager<int, std::pair<sf::IntRect,std::string>> mapTileSet;          

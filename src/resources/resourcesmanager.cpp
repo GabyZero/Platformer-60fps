@@ -23,14 +23,18 @@ namespace resources{
             texture.loadFromFile(path+"player.png");
             textures.addAsset("player",texture);
 
+            /** background **/
             texture = sf::Texture();
-            texture.loadFromFile(path+"background.png");
-            textures.addAsset("background",texture);
+            texture.loadFromFile(path+"sky.jpg");
+            texture.setRepeated(true);
+            textures.addAsset("sky",texture);
 
+            /** adds **/
             texture = sf::Texture();
             texture.loadFromFile(path+"block.png");
             textures.addAsset("block",texture);
 
+            /** tilesets **/
             texture = sf::Texture();
             texture.loadFromFile("resources/maps/tileset_1.png");
             textures.addAsset("tileset1",texture);
@@ -38,11 +42,17 @@ namespace resources{
             texture = sf::Texture();
             texture.loadFromFile("resources/maps/tileset_2.png");
             textures.addAsset("tileset2",texture);
+
+            /** animation **/
+            texture = sf::Texture();
+            texture.loadFromFile(path+"animations/fire.png");
+            textures.addAsset("fire",texture);
         }catch(std::exception e)
         {
             std::cerr << e.what() << std::endl;
             exit(1);
         }
+        std::cout << "Texture loaded" << std::endl;
     }
 
     void ResourcesManager::loadTileSet()
@@ -72,12 +82,24 @@ namespace resources{
                 mapTileSet.addAsset(id++, pair);
             }
         }
+        std::cout << "Tileset loaded" << std::endl;
+    }
+
+    void ResourcesManager::loadAnimation()
+    {
+        graphics::Animation animation(32,32,0,0,textures.getAsset("fire"), 3);
+        animations.addAsset("fire",animation);
+
+        std::cout << "Animation loaded" << std::endl;
     }
 
     void ResourcesManager::loadResources()
     {
         loadTextures();
         loadTileSet();
+        loadAnimation();
+
+        std::cout << "Resources loaded" << std::endl;
     }
 
 }

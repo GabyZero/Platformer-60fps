@@ -5,13 +5,18 @@
 #include <SFML/Graphics.hpp>
 #include <physics/icollidable.hpp>
 
+class Game;
+
 class Level : public sf::Drawable{
+    private:
+        Game &game;
     public:
         std::vector<physics::ICollidable*> collidable;
+        std::vector<physics::ICollidable*> trigerrable;
 
         std::vector<sf::Sprite> others;
 
-        Level();
+        Level(Game&);
         ~Level();
 
         void loadMap(const std::string path);

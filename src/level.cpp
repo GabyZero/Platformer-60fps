@@ -6,12 +6,17 @@
 #include <fstream>
 #include "block.hpp"
 
-Level::Level()
+#include "game.hpp"
+
+Level::Level(Game& _game):game(_game)
 {}
 
 Level::~Level()
 {
     for(physics::ICollidable *col : collidable)
+        delete col;
+
+    for(physics::ICollidable *col : trigerrable)
         delete col;
 }
 
@@ -21,15 +26,25 @@ void Level::loadMap(const std::string path)
     std::istream* stream = &file;
 
     RSJresource rsc = (*stream);
-
     
     for(int i = 0;;i++)
     {
         if(rsc["layers"][i]["name"].as<std::string>() == "collider")
         {
-            int size = rsc["tileheight"].as<int>();
+            int size = _TILE_HEIGHT;//rsc["tileheight"].as<int>();
             int width = rsc["layers"][i]["width"].as<int>();
             int height = rsc["layers"][i]["height"].as<int>();
+
+            game.scene.player.sprite.setPosition(rsc["properties"]["player_pos_x"].as<int>()*size, rsc["properties"]["player_pos_y"].as<int>()*size);
+
+            /** manage background */
+            sf::FloatRect rect;
+            rect.height = height;
+            rect.width = width;
+
+            game.scene.background.setImage(resources::ResourcesManager::instance().textures.getAsset(rsc["properties"]["background"].as<std::string>()));
+            game.scene.background.setSize(width*size+(2*_CAMERA_WIDTH), height*size+(2*_CAMERA_HEIGHT));
+            /* end background */
 
             int x = 0, y = 0;
 
@@ -100,7 +115,7 @@ void Level::loadMap(const std::string path)
 
 void Level::initLevel()
 {
-    loadMap("resources/maps/map1.json");
+    loadMap("resources/maps/map2.json");
     /*sf::Sprite sprite(resources::ResourcesManager::instance().textures.getAsset("block"));
     sprite.setPosition(255,200);
     collidable.push_back(std::move(sprite));
@@ -120,9 +135,12 @@ void Level::initLevel()
     //** todo: ajout de 4 gros collidable autour du niveau
 }
 
-void Level::update(const double)
+void Level::update(const double dt)
 {
-
+    for(physics::ICollidable *col : collidable)
+        col->update(dt);    
+    for(physics::ICollidable *col : trigerrable)
+        col->update(dt);
 }
 
 void Level::updatePhysics(const double)
@@ -133,6 +151,9 @@ void Level::updatePhysics(const double)
 void Level::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     for(physics::ICollidable *col : collidable)
+        target.draw(*col, states);
+
+    for(physics::ICollidable *col : trigerrable)
         target.draw(*col, states);
 
     for(sf::Sprite sp : others)

@@ -1,17 +1,36 @@
 #include "scene.hpp"
 
 #include "resources/resourcesmanager.hpp"
+#include <iostream>
 
-Scene::Scene()
+#include "animatedblock.hpp"
+#include "resources/resourcesmanager.hpp"
+#include "special/specialblock.hpp"
+#include "special/icomportment.hpp"
+
+class duchmol : public special::IComportment
 {
+    virtual void operator()(const physics::ICollidable &collidable, sf::FloatRect collision)
+    {
+        std::cout << "wesh alors " << std::endl;
+    }
 
+};
+
+Scene::Scene(Game &_game):
+game(_game),
+level(game)
+{
 }
 
 void Scene::initScene()
 {
-    background.setImage(resources::ResourcesManager::instance().textures.getAsset("background"));
     player.initPlayer();
     level.initLevel();
+    //std::cout << "test : " << player.sprite.getPosition().x << " " << player.sprite.getPosition().x << std::endl;
+    special::SpecialBlock<AnimatedBlock> *test = new special::SpecialBlock<AnimatedBlock>(resources::ResourcesManager::instance().animations.getAsset("fire"), *new duchmol());
+    test->setPosition(player.getPosition().x + 20 , player.getPosition().y);
+    level.trigerrable.push_back(test);
 }
 
 /** return true if the collision test is relevent **/
@@ -21,14 +40,12 @@ bool isCollisionTestRelevent(const sf::FloatRect &player, const sf::FloatRect &c
         && std::abs(player.left - collidable.left) <16;
 }
 
-#include <iostream>
-
 void Scene::managePlayerCollisions()
 {
     sf::FloatRect rectP;
     sf::FloatRect rectTmp;
 
-    for(const physics::ICollidable *col : level.collidable) //todo: don't test * //
+    for(physics::ICollidable *col : level.collidable) //todo: don't test * //
     {
         rectP = player.sprite.getGlobalBounds();
         if(!isCollisionTestRelevent(rectP, col->getGlobalBounds())) continue;
@@ -39,42 +56,24 @@ void Scene::managePlayerCollisions()
             std::cout << col->getGlobalBounds().left << " " << col->getGlobalBounds().top << std::endl;
             std::cout << rectTmp.left << " " << rectTmp.top << " " <<
             rectTmp.height << " " << rectTmp.width << std::endl;
-            
-            /*rectAvg.height += rectTmp.height;
-            rectAvg.width  += rectTmp.width;
 
-            rectAvg.left   += rectTmp.left;
-
-            cptRect ++;*/
             player.collisionEnter(*col, rectTmp);
-            
+            col->collisionEnter(player, rectTmp);        
         }
     } //foreach collidable
 
-    /*if(cptRect > 0)
+    for(physics::ICollidable *col : level.trigerrable) //todo: don't test * //
     {
-        if(rectAvg.height == 0 || rectAvg.height > rectAvg.width)
+        rectP = player.sprite.getGlobalBounds();
+        if(!isCollisionTestRelevent(rectP, col->getGlobalBounds())) continue;
+
+        //std::cout << sp.getGlobalBounds().height << " " << sp.getGlobalBounds().width << std::endl;
+        if(rectP.intersects(col->getGlobalBounds(),rectTmp))
         {
-            std::cout << rectAvg.left / cptRect  << std::endl;
-            std::cout << "p:" << rectP.left << std::endl; 
-            //left or right
-            if(std::abs((rectAvg.left / cptRect) - rectP.left) < 0.001 )
-            {
-                std::cout << "non" << std::endl;
-                player.sprite.setPosition(player.sprite.getPosition() + sf::Vector2((rectAvg.width/cptRect),.0f));               
-            }
+            //player.collisionEnter(*col, rectTmp); player dont know since it's a trigger
+            col->collisionEnter(player, rectTmp);        
         }
-        else if()
-        {
-            //top or down;
-            if(player.yAcceleration < .0f)//falling ?
-            {
-                player.sprite.setPosition(player.sprite.getPosition() + sf::Vector2(.0f,(rectAvg.height/cptRect)*-1));
-                player.yAcceleration = .0f;
-                player.canJump = true;
-            }
-        }
-    }//if cptRect>0 */
+    } //foreach collidable
 }
 
 void Scene::updatePhysics(_Float32 dt)

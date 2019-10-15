@@ -1,19 +1,34 @@
 #include "block.hpp"
 
-Block::Block(sf::IntRect& rect,const sf::Texture &text):
-sprite(text, rect)
+Block::Block()
 {
+    //sprite->setScale(_TILE_WIDTH/width,_TILE_HEIGHT/height); 
+}
+
+Block::Block(sf::IntRect& rect,const sf::Texture &text)
+{   
+    sprite = new sf::Sprite(text, rect);
+    sprite->setScale(_TILE_WIDTH/rect.width,_TILE_HEIGHT/rect.height); 
+}
+
+Block::~Block()
+{
+    delete sprite;
 }
 
 void Block::setPosition(float x, float y)
 {
-    sprite.setPosition(x,y);
+    sprite->setPosition(x,y);
 }
 
+void Block::update(float dt)
+{
+    //do nothing
+}
 
 void Block::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    target.draw(sprite, states);
+    target.draw(*sprite, states);
 }
 
 /** ICollidable implementation **/
@@ -24,12 +39,12 @@ void Block::collisionEnter(const ICollidable &collidable, sf::FloatRect collisio
 
 const sf::Vector2f& Block::getPosition() const
 {
-    return sprite.getPosition();
+    return sprite->getPosition();
 }
 
 sf::FloatRect Block::getGlobalBounds() const
 {
-    return sprite.getGlobalBounds();
+    return sprite->getGlobalBounds();
 }
 
-/** en icollidable **/
+/** end icollidable **/
