@@ -36,7 +36,7 @@ void Scene::managePlayerCollisions()
         //std::cout << sp.getGlobalBounds().height << " " << sp.getGlobalBounds().width << std::endl;
         if(rectP.intersects(col->getGlobalBounds(),rectTmp))
         {
-            //std::cout << col->getGlobalBounds().top << " " << col->getGlobalBounds().left << std::endl;
+            std::cout << col->getGlobalBounds().left << " " << col->getGlobalBounds().top << std::endl;
             std::cout << rectTmp.left << " " << rectTmp.top << " " <<
             rectTmp.height << " " << rectTmp.width << std::endl;
             

@@ -75,11 +75,13 @@ sf::FloatRect Player::getGlobalBounds() const
 
 void Player::updatePhysics(_Float32 dt)
 {
-    yAcceleration += -.1f; //gravity
+    yAcceleration += -9*dt; //gravity
     if (yAcceleration != 0)
     {
         if (yAcceleration > 0)
             apexJumpTime += dt;
+
+        yAcceleration = std::clamp(yAcceleration*dt, -16.0f, 16.0f)/dt;
 
         sprite.setPosition(sprite.getPosition().x, sprite.getPosition().y - (yAcceleration * dt));
 
@@ -90,7 +92,6 @@ void Player::updatePhysics(_Float32 dt)
         }
         yAcceleration -= jumpSpeed * dt * 2; //TODO gravity
     }
-    yAcceleration = std::clamp(yAcceleration*dt, -16.0f, 16.0f)/dt;
     //std::cout << "yAccel = " << yAcceleration << std::endl;
 }
 
@@ -106,7 +107,7 @@ void Player::update(_Float32 dt)
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && canJump)
     {
-        yAcceleration += jumpSpeed;
+        yAcceleration = jumpSpeed;
         canJump = false;
     }
 }

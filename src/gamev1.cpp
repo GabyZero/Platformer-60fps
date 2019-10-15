@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#define FPS 60.0f
+#define FPS 120.0f
 
 Gamev1::Gamev1():Game()
 {}
