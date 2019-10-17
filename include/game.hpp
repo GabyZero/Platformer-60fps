@@ -12,8 +12,8 @@
 #define _FPS 60
 #define _WIDTH 800
 #define _HEIGHT 800
-#define _CAMERA_WIDTH 250
-#define _CAMERA_HEIGHT 250
+#define _CAMERA_WIDTH 333
+#define _CAMERA_HEIGHT 333
 #define _GAMENAME "Plaformer random v0"
 
 #define _PLAYER_MAXLIFE 100

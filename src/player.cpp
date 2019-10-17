@@ -84,7 +84,7 @@ void Player::updatePhysics(_Float32 dt)
         if (yAcceleration > 0)
             apexJumpTime += dt;
 
-        yAcceleration = std::clamp(yAcceleration*dt, -16.0f, 16.0f)/dt;
+        //yAcceleration = std::clamp(yAcceleration*dt, -16.0f, 16.0f)/dt; todo veloticity maximum par rapport à dt
 
         sprite.setPosition(sprite.getPosition().x, sprite.getPosition().y - (yAcceleration * dt));
 
