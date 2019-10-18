@@ -36,7 +36,7 @@ void Gamev1::run()
             manageEvents();
 
             scene.update(dt);
-            scene.updatePhysics(1.0f / _FPS);
+            scene.updatePhysics(dt);
 
             view.setCenter(scene.player.getPosition());
             window.setView(view);
@@ -50,6 +50,6 @@ void Gamev1::run()
 
         begin = end;
 
-        std::cout << 1.0f/dt << std::endl;
+        //std::cout << 1.0f/dt << std::endl;
     }
 }

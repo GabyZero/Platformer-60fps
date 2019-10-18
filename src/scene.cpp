@@ -18,7 +18,6 @@ class duchmol : public special::IComportment
         duchmol(Game &game):IComportment(game){event.type = Event::EventType::PLAYER_DAMAGE;event.playerDamage.damage = 10;}
         virtual void operator()(const physics::ICollidable &collidable, sf::FloatRect collision)
         {
-            std::cout << "wesh alors " << std::endl;
             game.addEvent(event);
         }
 };
@@ -46,12 +45,14 @@ bool isCollisionTestRelevent(const sf::FloatRect &player, const sf::FloatRect &c
         && std::abs(player.left - collidable.left) <16;
 }
 
+#include <list>
+
 void Scene::managePlayerCollisions()
 {
     sf::FloatRect rectP;
     sf::FloatRect rectTmp;
 
-    for(physics::ICollidable *col : level.collidable) //todo: don't test * //
+    for(physics::ICollidable *col : level.collidable) 
     {
         rectP = player.sprite.getGlobalBounds();
         if(!isCollisionTestRelevent(rectP, col->getGlobalBounds())) continue;
@@ -68,7 +69,8 @@ void Scene::managePlayerCollisions()
         }
     } //foreach collidable
 
-    for(physics::ICollidable *col : level.trigerrable) //todo: don't test * //
+
+    for(physics::ICollidable *col : level.trigerrable)
     {
         rectP = player.sprite.getGlobalBounds();
         if(!isCollisionTestRelevent(rectP, col->getGlobalBounds())) continue;
@@ -79,7 +81,7 @@ void Scene::managePlayerCollisions()
             //player.collisionEnter(*col, rectTmp); player dont know since it's a trigger
             col->collisionEnter(player, rectTmp);        
         }
-    } //foreach collidable
+    } //foreach triggerable
 }
 
 void Scene::updatePhysics(_Float32 dt)

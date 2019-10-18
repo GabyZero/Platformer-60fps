@@ -4,6 +4,9 @@
 #include "physics/icollidable.hpp"
 
 class Character : public physics::ICollidable{
+    private:
+        sf::Sprite sprite;
+        
     public:
         virtual void collisionEnter(const ICollidable &collidable, sf::FloatRect collision) = 0;
         virtual const sf::Vector2f& getPosition() const  = 0 ;

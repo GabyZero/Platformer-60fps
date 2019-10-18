@@ -11,6 +11,7 @@ class Player : public physics::ICollidable{
         //TODO: max velocity
         float apexJumpTime = .0f;
 
+        sf::Vector2f lastPosition; //for collisions 
 
 
     public:
