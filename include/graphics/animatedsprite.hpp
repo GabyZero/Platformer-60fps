@@ -7,8 +7,8 @@
 namespace graphics{
 
 class AnimatedSprite : public sf::Sprite{
-    private:
-        const Animation& animation;
+    protected:
+        const Animation* animation;
 
         int currentFrame;
         sf::Time clock;

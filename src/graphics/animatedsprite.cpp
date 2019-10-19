@@ -4,35 +4,35 @@ namespace graphics
 {
 
 AnimatedSprite::AnimatedSprite(const Animation& _animation):
-animation(_animation)
+animation(&_animation)
 {
     currentFrame = 0;
     clock = sf::seconds(0);
-    setTexture(animation.texture);
+    setTexture(animation->texture);
     updateSprite(); //initialize the sprite
 }
 
 void AnimatedSprite::updateSprite()
 {
-    setTextureRect({animation.width*currentFrame,0,animation.width,animation.height}); // todo: add offset
+    setTextureRect({animation->width*currentFrame+animation->offset_w,animation->offset_h,animation->width,animation->height}); // todo: add offset
 }
 
 void AnimatedSprite::update(float dt)
 {
     clock += sf::seconds(dt);
-    if(clock>= animation.frameTime)
+    if(clock>= animation->frameTime)
     {
         //reset timer without loosing time
-        clock -= animation.frameTime;
+        clock -= animation->frameTime;
 
-        if(currentFrame +1 < animation.nbFrames)
+        if(currentFrame +1 < animation->nbFrames)
         {
             //next frame
             currentFrame++;
         }
         else
         {
-            if(animation.loop)
+            if(animation->loop)
             {
                 //loop
                 currentFrame=0;

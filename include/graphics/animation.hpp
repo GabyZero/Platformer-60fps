@@ -5,8 +5,7 @@
 
 namespace graphics{
 
-class Animation {
-    public:
+struct Animation {
         const sf::Texture& texture;
         const int nbFrames;
         const sf::Time frameTime;
@@ -18,7 +17,7 @@ class Animation {
         const int offset_w;
 
         /** Constructor : width, height of a sprite, then offsetw, offseth then nb frame then isLoop**/
-        explicit Animation(int,int,int,int,const sf::Texture&,int,sf::Time _fT=sf::seconds(0.1),bool _loop=true);      
+        explicit Animation(const int,const int,const int,const int,const sf::Texture&,const int,sf::Time _fT=sf::seconds(0.1),const bool _loop=true);      
 
 };
 

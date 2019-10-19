@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "animatedblock.hpp"
+#include "graphics/statesprite.hpp"
 #include "resources/resourcesmanager.hpp"
 #include "special/specialblock.hpp"
 #include "special/icomportment.hpp"
@@ -36,16 +37,16 @@ void Scene::initScene()
     special::SpecialBlock<AnimatedBlock> *test = new special::SpecialBlock<AnimatedBlock>(resources::ResourcesManager::instance().animations.getAsset("fire"), *new duchmol(game));
     test->setPosition(player.getPosition().x + 20 , player.getPosition().y);
     level.trigerrable.push_back(test);
+
+    std::cout << "Scene loaded" << std::endl;
 }
 
 /** return true if the collision test is relevent **/
 bool isCollisionTestRelevent(const sf::FloatRect &player, const sf::FloatRect &collidable)
 {
-    return std::abs(player.top - collidable.top) < 16 
-        && std::abs(player.left - collidable.left) <16;
+    return std::abs(player.top - collidable.top) < 20 
+        && std::abs(player.left - collidable.left) <20;
 }
-
-#include <list>
 
 void Scene::managePlayerCollisions()
 {
@@ -54,7 +55,7 @@ void Scene::managePlayerCollisions()
 
     for(physics::ICollidable *col : level.collidable) 
     {
-        rectP = player.sprite.getGlobalBounds();
+        rectP = player.sprite->getGlobalBounds();
         if(!isCollisionTestRelevent(rectP, col->getGlobalBounds())) continue;
 
         //std::cout << sp.getGlobalBounds().height << " " << sp.getGlobalBounds().width << std::endl;
@@ -72,7 +73,7 @@ void Scene::managePlayerCollisions()
 
     for(physics::ICollidable *col : level.trigerrable)
     {
-        rectP = player.sprite.getGlobalBounds();
+        rectP = player.sprite->getGlobalBounds();
         if(!isCollisionTestRelevent(rectP, col->getGlobalBounds())) continue;
 
         //std::cout << sp.getGlobalBounds().height << " " << sp.getGlobalBounds().width << std::endl;

@@ -20,6 +20,8 @@
 
 #define _TILE_WIDTH 16
 #define _TILE_HEIGHT 16
+#define _PLAYER_WIDTH 20
+#define _PLAYER_HEIGHT 20
 
 
 

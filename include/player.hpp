@@ -2,6 +2,7 @@
 #define PLAYER_HPP
 
 #include <SFML/Graphics.hpp>
+#include "graphics/animatedsprite.hpp"
 #include "physics/icollidable.hpp"
 
 class Player : public physics::ICollidable{
@@ -18,7 +19,7 @@ class Player : public physics::ICollidable{
         /** attributes **/
 
         /*sf::Texture texture;*/
-        sf::Sprite sprite;
+        graphics::AnimatedSprite* sprite;
 
         enum State { left, right, jump, iddle};
 

@@ -9,6 +9,8 @@ Gamev1::~Gamev1(){}
 
 void Gamev1::run()
 {
+    std::cout << "Launching game loop" << std::endl;
+    
     _Float32 dt = 1.0f / _FPS; 
     sf::Clock clock;
 

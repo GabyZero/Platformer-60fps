@@ -35,7 +35,7 @@ void Level::loadMap(const std::string path)
             int width = rsc["layers"][i]["width"].as<int>();
             int height = rsc["layers"][i]["height"].as<int>();
 
-            game.scene.player.sprite.setPosition(rsc["properties"]["player_pos_x"].as<int>()*size, rsc["properties"]["player_pos_y"].as<int>()*size);
+            game.scene.player.sprite->setPosition(rsc["properties"]["player_pos_x"].as<int>()*size, rsc["properties"]["player_pos_y"].as<int>()*size);
 
             /** manage background */
             sf::FloatRect rect;
@@ -69,48 +69,7 @@ void Level::loadMap(const std::string path)
         }
     }
 
-    /*if(file.fail())
-    {
-        std::cerr << "Error while openning : " << path << std::endl;
-        exit(1);
-    }
-
-    int size = 16;
-    int x = 0, y = 0;
-
-    int id;
-    char c;
-    while(file.good())
-    {
-        file >> id;
-
-        if(id!=-1)
-        {
-            auto pair = resources::ResourcesManager::instance().mapTileSet.getAsset(id);
-            //sf::Sprite sprite(resources::ResourcesManager::instance().textures.getAsset(pair.second),pair.first);
-            Block* block = new Block(pair.first,resources::ResourcesManager::instance().textures.getAsset(pair.second));
-            block->setPosition(x,y);
-            //sprite.setPosition(x,y);
-            collidable.push_back(block);
-            
-            std::cout << "id:" << id << " (" << x << "," << y << ")";
-            std::cout << " => " << pair.second;
-            std::cout << "(" << pair.first.left << "," << pair.first.top << ")[" << pair.first.width << "x" << pair.first.height << "]";
-            std::cout << std::endl;
-        }
-        c = file.peek();
-        if(c==',')
-        {
-            file >> c;
-            x+=size;
-        }
-        else
-        {
-            //std::cout << "["<<c<<"]"<<std::endl;
-            x=0;
-            y+=size;
-        }       
-    }*/
+    std::cout << "Map loaded" << std::endl;
 }
 
 void Level::initLevel()
