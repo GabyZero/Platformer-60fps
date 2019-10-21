@@ -103,14 +103,14 @@ namespace resources{
         const sf::Texture &t = textures.getAsset("playerA");
 
 
-        anims.animations[2] = new graphics::Animation(17,22,0,0,t,2,sf::seconds(0.9f)); //iddleL
-        anims.animations[3] = new graphics::Animation(17,22,0,22,t,2,sf::seconds(0.9f)); //iddleR
+        anims.animations[PlayerState::iddleL] = new graphics::Animation(17,22,0,0,t,2,sf::seconds(0.9f)); //iddleL
+        anims.animations[PlayerState::iddleR] = new graphics::Animation(17,22,0,24,t,2,sf::seconds(0.9f)); //iddleR
         
-        anims.animations[4] = new graphics::Animation(17,22,42,0,t,4,sf::seconds(0.2f)); //walkL
-        anims.animations[5] = new graphics::Animation(17,22,42,23,t,4,sf::seconds(0.1f)); //walkR
+        anims.animations[PlayerState::walkL] = new graphics::Animation(17,22,42,0,t,4,sf::seconds(0.2f)); //walkL
+        anims.animations[PlayerState::walkR] = new graphics::Animation(17,22,42,24,t,4,sf::seconds(0.1f)); //walkR
         
-        anims.animations[1] = new graphics::Animation(17,22,102,0,t,4,sf::seconds(0.1f)); //runL
-        anims.animations[0] = new graphics::Animation(17,22,102,22,t,4,sf::seconds(0.15f)); //runR
+        anims.animations[PlayerState::runL] = new graphics::Animation(17,22,102,0,t,4,sf::seconds(0.1f)); //runL
+        anims.animations[PlayerState::runR] = new graphics::Animation(17,22,102,24,t,4,sf::seconds(0.1f)); //runR
 
         stateAnimations.addAsset("player", anims);
 

@@ -20,6 +20,9 @@ class AnimatedSprite : public sf::Sprite{
         /** update the frame to the current frame, called by update **/
         void updateSprite();
 
+        /** set the current animation to the first frame **/
+        void resetAnim();
+
         void update(float);
 };
 

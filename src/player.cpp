@@ -16,14 +16,17 @@ Player::Player() : sprite()
 
 void Player::initPlayer()
 {
-    //sprite.setTexture(resources::ResourcesManager::instance().textures.getAsset("player"));
-    //sprite.setPosition(32, 100);
     sprite = new graphics::AnimatedStateSprite(resources::ResourcesManager::instance().stateAnimations.getAsset("player"));
-    lastPosition = getPosition();
-    state = State::iddle;
+    state = State::iddleR;
+    sprite->setState(resources::ResourcesManager::PlayerState::iddleR);
+    sprite->resetAnim();
+
+    /** scaling **/
     sf::FloatRect rest =sprite->getGlobalBounds();
     sprite->setScale(_PLAYER_WIDTH/rest.width, _PLAYER_HEIGHT/rest.height);
-    std::cout << rest.width << "  " << rest.height << std::endl;
+    
+    lastPosition = getPosition();
+    
 }
 
 void Player::stopJumping()
@@ -112,12 +115,28 @@ void Player::update(_Float32 dt)
     lastPosition = getPosition();
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
     {
+        sprite->setState(resources::ResourcesManager::PlayerState::runL);
+        state = State::left;
         sprite->setPosition(sprite->getPosition().x - (speed * dt), sprite->getPosition().y);
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
+        sprite->setState(resources::ResourcesManager::PlayerState::runR);
+        state = State::right;
         sprite->setPosition(sprite->getPosition().x + (speed * dt), sprite->getPosition().y);
     }
+    else
+    {
+        if(state==State::right){ sprite->setState(resources::ResourcesManager::PlayerState::iddleR);}
+        else if(state==State::left){ sprite->setState(resources::ResourcesManager::PlayerState::iddleL);}
+        if(state!=State::iddleR)
+        {
+            state=State::iddleR; //doesn't care about R or L
+            sprite->resetAnim();
+        }
+    }
+    
+    
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && canJump)
     {
         apexJumpTime = 0;

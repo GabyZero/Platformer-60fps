@@ -21,7 +21,7 @@ void Block::setPosition(float x, float y)
     sprite->setPosition(x,y);
 }
 
-void Block::update(float dt)
+void Block::update(float)
 {
     //do nothing
 }
@@ -32,7 +32,7 @@ void Block::draw(sf::RenderTarget& target, sf::RenderStates states) const
 }
 
 /** ICollidable implementation **/
-void Block::collisionEnter(const ICollidable &collidable, sf::FloatRect collision)
+void Block::collisionEnter(const ICollidable &, sf::FloatRect )
 {
 
 }

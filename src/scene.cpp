@@ -17,7 +17,7 @@ class duchmol : public special::IComportment
     public:
         Event event;
         duchmol(Game &game):IComportment(game){event.type = Event::EventType::PLAYER_DAMAGE;event.playerDamage.damage = 10;}
-        virtual void operator()(const physics::ICollidable &collidable, sf::FloatRect collision)
+        virtual void operator()(const physics::ICollidable &, sf::FloatRect )
         {
             game.addEvent(event);
         }
@@ -44,7 +44,7 @@ void Scene::initScene()
 /** return true if the collision test is relevent **/
 bool isCollisionTestRelevent(const sf::FloatRect &player, const sf::FloatRect &collidable)
 {
-    return std::abs(player.top - collidable.top) < 20 
+    return std::abs(player.top - collidable.top) < 20  
         && std::abs(player.left - collidable.left) <20;
 }
 

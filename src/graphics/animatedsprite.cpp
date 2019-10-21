@@ -17,6 +17,14 @@ void AnimatedSprite::updateSprite()
     setTextureRect({animation->width*currentFrame+animation->offset_w,animation->offset_h,animation->width,animation->height}); // todo: add offset
 }
 
+void AnimatedSprite::resetAnim()
+{
+    currentFrame = 0;
+    clock = clock.Zero;
+    updateSprite();
+}
+
+
 void AnimatedSprite::update(float dt)
 {
     clock += sf::seconds(dt);
