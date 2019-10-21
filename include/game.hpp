@@ -8,6 +8,7 @@
 
 #include "scene.hpp"
 #include "event.hpp"
+#include "ui/uimanager.hpp"
 
 #define _FPS 60
 #define _WIDTH 800
@@ -40,7 +41,8 @@ class Game{
 
     public:
         Scene scene;
-
+        ui::UIManager ui;
+        
         Game();
 
         void initGame();   

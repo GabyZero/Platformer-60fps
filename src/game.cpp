@@ -42,6 +42,7 @@ void Game::handleEvent(Event& evt)
 void Game::initGame()
 {
     scene.initScene();
+    ui.initGameUI();
 }
 
 Game::~Game()

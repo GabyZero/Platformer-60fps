@@ -39,11 +39,13 @@ void Gamev1::run()
 
             scene.update(dt);
             scene.updatePhysics(dt);
+            ui.update(dt);
 
             view.setCenter(scene.player.getPosition());
             window.setView(view);
 
             scene.render(window);
+            ui.render(window);
             window.display();
         }
 
