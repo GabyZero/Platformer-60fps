@@ -38,7 +38,7 @@ void Gamev1::run()
             manageEvents();
 
             scene.update(dt);
-            scene.updatePhysics(dt);
+            scene.updatePhysics(1/30.f);
             ui.update(dt);
 
             view.setCenter(scene.player.getPosition());

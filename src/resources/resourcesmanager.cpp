@@ -109,8 +109,8 @@ namespace resources{
         anims.animations[PlayerState::walkL] = new graphics::Animation(17,22,42,0,t,4,sf::seconds(0.2f)); //walkL
         anims.animations[PlayerState::walkR] = new graphics::Animation(17,22,42,24,t,4,sf::seconds(0.1f)); //walkR
         
-        anims.animations[PlayerState::runL] = new graphics::Animation(17,22,102,0,t,4,sf::seconds(0.1f)); //runL
-        anims.animations[PlayerState::runR] = new graphics::Animation(17,22,102,24,t,4,sf::seconds(0.1f)); //runR
+        anims.animations[PlayerState::runL] = new graphics::Animation(17,22,102,0,t,4,sf::seconds(0.15f)); //runL
+        anims.animations[PlayerState::runR] = new graphics::Animation(17,22,102,24,t,4,sf::seconds(0.15f)); //runR
 
         stateAnimations.addAsset("player", anims);
 
