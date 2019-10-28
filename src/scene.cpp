@@ -2,6 +2,7 @@
 
 #include "resources/resourcesmanager.hpp"
 #include <iostream>
+#include "debug/debugger.hpp"
 
 #include "animatedblock.hpp"
 #include "graphics/statesprite.hpp"
@@ -64,7 +65,6 @@ void Scene::managePlayerCollisions()
             /*std::cout << col->getGlobalBounds().left << " " << col->getGlobalBounds().top << std::endl;
             std::cout << rectTmp.left << " " << rectTmp.top << " " <<
             rectTmp.height << " " << rectTmp.width << std::endl;*/
-
             player.collisionEnter(*col, rectTmp);
             col->collisionEnter(player, rectTmp);        
         }
