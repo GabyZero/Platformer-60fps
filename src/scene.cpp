@@ -2,6 +2,7 @@
 
 #include "resources/resourcesmanager.hpp"
 #include <iostream>
+#include "debug/debugger.hpp"
 
 #include "animatedblock.hpp"
 #include "graphics/statesprite.hpp"
