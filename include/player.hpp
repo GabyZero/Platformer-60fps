@@ -49,6 +49,8 @@ class Player : public physics::RigidBody{
         virtual const sf::Vector2f& getPosition() const;
         virtual sf::FloatRect getGlobalBounds() const;
 
+        /** Rigidbody **/
+        virtual void verticalCollisionEnter(const ICollidable&);
 
         void stopJumping();
 

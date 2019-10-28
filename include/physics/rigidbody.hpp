@@ -10,7 +10,8 @@ namespace physics{
 class RigidBody : public ICollidable{
     public:
         sf::Vector2f acceleration;
-
+        sf::Vector2f lastposition;
+        
         /** icollidable **/
         virtual void verticalCollisionEnter(const ICollidable &collidable);
         virtual void horizontalCollisionEnter(const ICollidable &collidable);

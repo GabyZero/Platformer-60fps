@@ -54,7 +54,6 @@ void Scene::managePlayerCollisions(float dt)
 {
     sf::FloatRect rectP;
     sf::FloatRect rectTmp;
-
     for(physics::ICollidable *col : level.collidable) 
     {
         rectP = player.sprite->getGlobalBounds();
@@ -85,12 +84,10 @@ void Scene::managePlayerCollisions(float dt)
 
 void Scene::updatePhysics(_Float32 dt)
 {   
-    /** detect the collision before **/
-    managePlayerCollisions(dt);
-
     player.updatePhysics(dt);
     level.updatePhysics(dt);
 
+    managePlayerCollisions(dt);
 }
 
 void Scene::update(float dt)

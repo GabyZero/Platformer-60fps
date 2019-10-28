@@ -19,12 +19,12 @@ void Player::setPosition(float x, float y)
     sprite->setPosition(x,y);
 }
 
-void Player::setX(float y)
+void Player::setY(float y)
 {
     sprite->setPosition(sprite->getPosition().x, y);
 }
 
-void Player::setY(float x)
+void Player::setX(float x)
 {
     sprite->setPosition(x, sprite->getPosition().y);    
 }
@@ -42,6 +42,7 @@ void Player::initPlayer()
     
     lastPosition = getPosition();
     
+    //acceleration.y = -0.1f;
 }
 
 void Player::stopJumping()
@@ -66,7 +67,12 @@ sf::FloatRect Player::getGlobalBounds() const
     return sprite->getGlobalBounds();
 }
 
-/** en icollidable **/
+void Player::verticalCollisionEnter(const physics::ICollidable& col)
+{
+    physics::RigidBody::verticalCollisionEnter(col);
+    if(col.getPosition().y >= getPosition().y)
+        canJump=true; //can jump if the player touch the ground
+}
 
 void Player::updatePhysics(_Float32 dt)
 {
@@ -77,7 +83,7 @@ void Player::updatePhysics(_Float32 dt)
         if (acceleration.y > 0)
             apexJumpTime += dt;
 
-        acceleration.y = std::clamp(acceleration.y*dt, -(float)_TILE_HEIGHT, (float)_TILE_HEIGHT)/dt; //todo veloticity maximum par rapport à dt
+        //acceleration.y = std::clamp(acceleration.y*dt, -(float)_TILE_HEIGHT, (float)_TILE_HEIGHT)/dt; //todo veloticity maximum par rapport à dt
 
         if (apexJumpTime > 0.5 /*apex*/)
         {

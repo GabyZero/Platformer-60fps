@@ -11,4 +11,10 @@ std::ostream& operator<<(std::ostream &os, const sf::FloatRect &fr)
     return os;
 }
 
+std::ostream& operator<<(std::ostream &os, const sf::Vector2f &v)
+{
+    os << "(" << v.x << "," << v.y << ")";
+    return os;
+}
+
 #endif

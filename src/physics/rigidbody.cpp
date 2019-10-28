@@ -1,12 +1,14 @@
 #include "physics/rigidbody.hpp"
 
+#include <iostream>
+
 namespace physics
 {
     void RigidBody::horizontalCollisionEnter(const ICollidable &collidable)
     {
         sf::Vector2f cpos = collidable.getPosition();
         float cwidth = collidable.getGlobalBounds().width;
-        if(cpos.x>getPosition().x)
+        if(cpos.x>lastposition.x)
         {
             setX(cpos.x-getGlobalBounds().width);
         }
@@ -19,9 +21,10 @@ namespace physics
 
     void RigidBody::verticalCollisionEnter(const ICollidable &collidable)
     {
+        std::cout << "non" << std::endl;
         sf::Vector2f cpos = collidable.getPosition();
         float cheight = collidable.getGlobalBounds().height;
-        if(cpos.y>getPosition().y)
+        if(cpos.y>lastposition.y)
         {
             setY(cpos.y-getGlobalBounds().height);
         }
@@ -34,10 +37,10 @@ namespace physics
 
     void RigidBody::updatePhysics(float dt)
     {
-        sf::Vector2f pos = getPosition();
+        lastposition = getPosition();
         setPosition(
-            pos.x + (acceleration.x*dt),
-            pos.y + (acceleration.y*dt)
+            lastposition.x + (acceleration.x*dt),
+            lastposition.y - (acceleration.y*dt)
         );
     }
 }

@@ -38,7 +38,7 @@ void Gamev1::run()
             manageEvents();
 
             scene.update(dt);
-            scene.updatePhysics(1/30.f);
+            scene.updatePhysics(dt);
             ui.update(dt);
 
             view.setCenter(scene.player.getPosition());
@@ -53,7 +53,7 @@ void Gamev1::run()
         dt = (end-begin).asSeconds();
 
         begin = end;
-
+        std::cout << "frame" << std::endl;
         //std::cout << 1.0f/dt << std::endl;
     }
 }
