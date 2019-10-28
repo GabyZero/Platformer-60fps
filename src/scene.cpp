@@ -8,6 +8,7 @@
 #include "resources/resourcesmanager.hpp"
 #include "special/specialblock.hpp"
 #include "special/icomportment.hpp"
+#include "physics/collisiondetector.hpp"
 
 #include "event.hpp"
 
@@ -48,7 +49,7 @@ bool isCollisionTestRelevent(const sf::FloatRect &player, const sf::FloatRect &c
         && std::abs(player.left - collidable.left) <20;
 }
 
-void Scene::managePlayerCollisions()
+void Scene::managePlayerCollisions(float dt)
 {
     sf::FloatRect rectP;
     sf::FloatRect rectTmp;
@@ -59,14 +60,10 @@ void Scene::managePlayerCollisions()
         if(!isCollisionTestRelevent(rectP, col->getGlobalBounds())) continue;
 
         //std::cout << sp.getGlobalBounds().height << " " << sp.getGlobalBounds().width << std::endl;
-        if(rectP.intersects(col->getGlobalBounds(),rectTmp))
+        if(physics::CollisionDetector::nextFrameVerticalCollision(player,*col, dt))
         {
-            /*std::cout << col->getGlobalBounds().left << " " << col->getGlobalBounds().top << std::endl;
-            std::cout << rectTmp.left << " " << rectTmp.top << " " <<
-            rectTmp.height << " " << rectTmp.width << std::endl;*/
-
-            player.collisionEnter(*col, rectTmp);
-            col->collisionEnter(player, rectTmp);        
+            player.verticalCollisionEnter(*col);
+            col->verticalCollisionEnter(player);
         }
     } //foreach collidable
 
@@ -80,17 +77,19 @@ void Scene::managePlayerCollisions()
         if(rectP.intersects(col->getGlobalBounds(),rectTmp))
         {
             //player.collisionEnter(*col, rectTmp); player dont know since it's a trigger
-            col->collisionEnter(player, rectTmp);        
+            //col->collisionEnter(player, rectTmp);        
         }
     } //foreach triggerable
 }
 
 void Scene::updatePhysics(_Float32 dt)
-{
+{   
+    /** detect the collision before **/
+    managePlayerCollisions(dt);
+
     player.updatePhysics(dt);
     level.updatePhysics(dt);
 
-    managePlayerCollisions();
 }
 
 void Scene::update(float dt)

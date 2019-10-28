@@ -32,7 +32,12 @@ void Block::draw(sf::RenderTarget& target, sf::RenderStates states) const
 }
 
 /** ICollidable implementation **/
-void Block::collisionEnter(const ICollidable &, sf::FloatRect )
+void Block::verticalCollisionEnter(const ICollidable &)
+{
+
+}
+
+void Block::horizontalCollisionEnter(const ICollidable &)
 {
 
 }

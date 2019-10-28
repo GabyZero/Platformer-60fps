@@ -3,9 +3,9 @@
 
 #include <SFML/Graphics.hpp>
 #include "graphics/statesprite.hpp"
-#include "physics/icollidable.hpp"
+#include "physics/rigidbody.hpp"
 
-class Player : public physics::ICollidable{
+class Player : public physics::RigidBody{
     private:
         float speed = 150.0f; //todo const
         float jumpSpeed = 300.0f ; // todo const
@@ -14,6 +14,12 @@ class Player : public physics::ICollidable{
 
         sf::Vector2f lastPosition; //for collisions 
 
+
+    protected:
+        /** rigid body **/
+        virtual void setPosition(float,float) ;
+        virtual void setX(float);
+        virtual void setY(float);
 
     public:
         /** attributes **/
@@ -25,7 +31,7 @@ class Player : public physics::ICollidable{
 
         State state;
 
-         _Float32 yAcceleration = 0.0f;
+        // _Float32 yAcceleration = 0.0f;
         bool canJump = false;
 
         int life, maxLife;
@@ -40,15 +46,14 @@ class Player : public physics::ICollidable{
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
         /** ICollidable implementation **/
-        virtual void collisionEnter(const ICollidable &collidable, sf::FloatRect collision);
         virtual const sf::Vector2f& getPosition() const;
         virtual sf::FloatRect getGlobalBounds() const;
 
 
         void stopJumping();
 
-        void updatePhysics(_Float32);
-        void update(_Float32);
+        virtual void updatePhysics(_Float32);
+        virtual void update(_Float32);
 };
 
 #endif
