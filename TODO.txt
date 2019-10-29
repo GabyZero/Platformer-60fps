@@ -1,1 +1,0 @@
-Preprocess collision avec un "rayon" -> vector(velocityX,veclocityY) 

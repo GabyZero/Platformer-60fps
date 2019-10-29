@@ -18,12 +18,14 @@
  "properties":
     {
      "background":"sky",
+     "music":"music1",
      "player_pos_x":2,
      "player_pos_y":61
     },
  "propertytypes":
     {
      "background":"string",
+     "music":"string",
      "player_pos_x":"int",
      "player_pos_y":"int"
     },

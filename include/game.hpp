@@ -5,10 +5,12 @@
 #include <exception>
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 #include "scene.hpp"
 #include "event.hpp"
 #include "ui/uimanager.hpp"
+#include "audio/audiomanager.hpp"
 
 #define _FPS 60
 #define _WIDTH 800
@@ -33,13 +35,13 @@ class Game{
     protected:      
         sf::RenderWindow window;
         sf::View view;
-
         std::queue<Event> eventList;
         
 
     public:
         Scene scene;
         ui::UIManager ui;
+        audio::AudioManager audioManager;
         
         Game();
 

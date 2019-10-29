@@ -1,38 +1,60 @@
 #ifndef ASSETSMANAGER_HPP
 #define ASSETSMANAGER_HPP
 
-#include <SFML/Graphics.hpp>
 #include <unordered_map>
 
 namespace resources{
     
+    class AssetsManagerException : public std::exception{
+        virtual const char* what() const throw()
+        {
+            return "AssetsManagerError";
+        }
+     };
+
     template<typename KEY, typename TASSET>
     class AssetsManager{
         private:
-            std::unordered_map<KEY, TASSET> assets;
-
-            class AssetsManagerException : public std::exception{
-                virtual const char* what() const throw()
-                {
-                    return "AssetsManagerError";
-                }
-            };
+            std::unordered_map<KEY, TASSET*> assets;
+            
 
         public:
-            AssetsManager(){}
 
-            void addAsset(const KEY & id, TASSET asset)
+            AssetsManager(){}
+            ~AssetsManager()
             {
-                if(!assets.emplace(id, asset).second)
+                for(auto p : assets)
+                {
+                    delete p.second;
+                }
+            }
+
+            void addAsset(const KEY & id, TASSET *asset)
+            {
+                if(!assets.emplace(id, std::move(asset)).second)
                     throw AssetsManagerException();
             }
 
             const TASSET& getAsset(const KEY id) const
-            {
-                return assets.at(id);
+            {   
+                try{
+                    return *assets.at(id);
+                }catch(std::out_of_range)
+                {
+                    throw AssetsManagerException();
+                }
             }
 
-            ~AssetsManager(){}
+            TASSET& getAsset(const KEY id)
+            {   
+                try{
+                    return *assets.at(id);
+                }catch(std::out_of_range)
+                {
+                    throw AssetsManagerException();
+                }
+            }
+
     
     };
 

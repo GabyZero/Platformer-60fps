@@ -26,6 +26,8 @@ void Player::initPlayer()
     sprite->setScale(_PLAYER_WIDTH/rest.width, _PLAYER_HEIGHT/rest.height);
     
     lastPosition = getPosition();
+
+    jumpSound.setBuffer(resources::ResourcesManager::instance().sounds.getAsset("jump1"));
     
 }
 
@@ -110,8 +112,13 @@ void Player::updatePhysics(_Float32 dt)
     //std::cout << "yAccel = " << yAcceleration << std::endl;
 }
 
-void Player::update(_Float32 dt)
+void Player::updateSoundsPosition()
 {
+    jumpSound.setPosition(getPosition().x, getPosition().y, 0);
+}
+
+void Player::update(_Float32 dt)
+{   
     lastPosition = getPosition();
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
     {
@@ -140,11 +147,14 @@ void Player::update(_Float32 dt)
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && canJump)
     {
         apexJumpTime = 0;
+        jumpSound.play();
         yAcceleration = jumpSpeed;
         canJump = false;
     }
 
     sprite->update(dt);
+    
+    //updateSoundsPosition();
 
     //std::cout << "Life : " << life << std::endl;
 }

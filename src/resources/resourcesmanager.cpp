@@ -10,6 +10,11 @@ namespace resources{
 
     }
 
+    ResourcesManager::~ResourcesManager()
+    {
+
+    }
+
     ResourcesManager& ResourcesManager::instance()
     {
         static ResourcesManager instance;
@@ -20,37 +25,37 @@ namespace resources{
     {
         std::string path = "resources/textures/";
         try{
-            sf::Texture texture;
-            texture.loadFromFile(path+"player.png");
+            sf::Texture* texture = new sf::Texture();
+            texture->loadFromFile(path+"player.png");
             textures.addAsset("player",texture);
 
             /** background **/
-            texture = sf::Texture();
-            texture.loadFromFile(path+"sky.jpg");
-            texture.setRepeated(true);
-            textures.addAsset("sky",texture);
+            texture = new sf::Texture();
+            texture->loadFromFile(path+"sky.jpg");
+            texture->setRepeated(true);
+            textures.addAsset("sky", texture);
 
             /** adds **/
-            texture = sf::Texture();
-            texture.loadFromFile(path+"block.png");
+            texture = new sf::Texture();
+            texture->loadFromFile(path+"block.png");
             textures.addAsset("block",texture);
 
             /** tilesets **/
-            texture = sf::Texture();
-            texture.loadFromFile("resources/maps/tileset_1.png");
+            texture = new sf::Texture();
+            texture->loadFromFile("resources/maps/tileset_1.png");
             textures.addAsset("tileset1",texture);
 
-            texture = sf::Texture();
-            texture.loadFromFile("resources/maps/tileset_2.png");
+            texture = new sf::Texture();
+            texture->loadFromFile("resources/maps/tileset_2.png");
             textures.addAsset("tileset2",texture);
 
             /** animation **/
-            texture = sf::Texture();
-            texture.loadFromFile(path+"animations/fire.png");
+            texture = new sf::Texture();
+            texture->loadFromFile(path+"animations/fire.png");
             textures.addAsset("fire",texture);
 
-            texture = sf::Texture();
-            texture.loadFromFile(path+"player/player.png");
+            texture = new sf::Texture();
+            texture->loadFromFile(path+"player/player.png");
             textures.addAsset("playerA", texture);
         }catch(std::exception e)
         {
@@ -67,12 +72,12 @@ namespace resources{
         int size = 16;
         
         int id = 0;
-        std::pair<sf::IntRect, std::string> pair;
+        std::pair<sf::IntRect, std::string> *pair;
         for(int y = 0 ; y < height; y += size)
         {
             for(int x = 0 ; x < width ; x += size)
             {
-                pair = std::pair(sf::IntRect(x,y,size,size), "tileset1");
+                pair = new std::pair<sf::IntRect,std::string>(sf::IntRect(x,y,size,size), std::string("tileset1"));
                 mapTileSet.addAsset(id++, pair);
             }
         }
@@ -83,7 +88,7 @@ namespace resources{
             for(int x = 0 ; x < width ; x += size)
             {
                 //std::cout << id << std::endl;
-                pair = std::pair(sf::IntRect(x,y,size,size), "tileset2");
+                pair = new std::pair<sf::IntRect,std::string>(sf::IntRect(x,y,size,size), std::string("tileset2"));
                 mapTileSet.addAsset(id++, pair);
             }
         }
@@ -92,29 +97,54 @@ namespace resources{
 
     void ResourcesManager::loadAnimation()
     {
-        graphics::Animation animation(32,32,0,0,textures.getAsset("fire"), 3);
+        graphics::Animation *animation = new graphics::Animation(32,32,0,0,textures.getAsset("fire"), 3);
         animations.addAsset("fire",animation);
 
         std::cout << "Animation loaded" << std::endl;
     }
     void ResourcesManager::loadStateAnimation()
     {
-        graphics::StateAnimation anims(6);
+        graphics::StateAnimation *anims = new graphics::StateAnimation(6);
         const sf::Texture &t = textures.getAsset("playerA");
 
 
-        anims.animations[PlayerState::iddleL] = new graphics::Animation(17,22,0,0,t,2,sf::seconds(0.9f)); //iddleL
-        anims.animations[PlayerState::iddleR] = new graphics::Animation(17,22,0,24,t,2,sf::seconds(0.9f)); //iddleR
+        anims->animations[PlayerState::iddleL] = new graphics::Animation(17,22,0,0,t,2,sf::seconds(0.9f)); //iddleL
+        anims->animations[PlayerState::iddleR] = new graphics::Animation(17,22,0,24,t,2,sf::seconds(0.9f)); //iddleR
         
-        anims.animations[PlayerState::walkL] = new graphics::Animation(17,22,42,0,t,4,sf::seconds(0.2f)); //walkL
-        anims.animations[PlayerState::walkR] = new graphics::Animation(17,22,42,24,t,4,sf::seconds(0.1f)); //walkR
+        anims->animations[PlayerState::walkL] = new graphics::Animation(17,22,42,0,t,4,sf::seconds(0.2f)); //walkL
+        anims->animations[PlayerState::walkR] = new graphics::Animation(17,22,42,24,t,4,sf::seconds(0.1f)); //walkR
         
-        anims.animations[PlayerState::runL] = new graphics::Animation(17,22,102,0,t,4,sf::seconds(0.15f)); //runL
-        anims.animations[PlayerState::runR] = new graphics::Animation(17,22,102,24,t,4,sf::seconds(0.15f)); //runR
+        anims->animations[PlayerState::runL] = new graphics::Animation(17,22,102,0,t,4,sf::seconds(0.15f)); //runL
+        anims->animations[PlayerState::runR] = new graphics::Animation(17,22,102,24,t,4,sf::seconds(0.15f)); //runR
 
         stateAnimations.addAsset("player", anims);
 
         std::cout << "State animation loaded" << std::endl;
+    }
+
+    void ResourcesManager::loadAudios()
+    {
+        std::string path = "resources/audio/";
+        
+        sf::Music* music = new sf::Music();
+        if(!music->openFromFile(path+"music/music1.ogg"))
+        {
+            std::cerr << "can't open " << path+"music/music1.ogg" << std::endl;
+        }
+        music->setVolume(60);
+        music->setLoop(true);
+
+        musics.addAsset("music1", music);
+
+        /** Sound effect **/
+        sf::SoundBuffer* sb = new sf::SoundBuffer();
+        if(!sb->loadFromFile(path+"sound/jump1.ogg"))
+            std::cerr << "can't open" << path+"sound/jump1.ogg";
+
+        sounds.addAsset("jump1",sb);
+
+        std::cout << "Audio loaded" << std::endl;
+
     }
 
     void ResourcesManager::loadResources()
@@ -123,6 +153,7 @@ namespace resources{
         loadTileSet();
         loadAnimation();
         loadStateAnimation();
+        loadAudios();
 
         std::cout << "Resources loaded" << std::endl;
     }

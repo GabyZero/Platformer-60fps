@@ -2,6 +2,7 @@
 #define PLAYER_HPP
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "graphics/statesprite.hpp"
 #include "physics/icollidable.hpp"
 
@@ -12,7 +13,12 @@ class Player : public physics::ICollidable{
         //TODO: max velocity
         float apexJumpTime = .0f;
 
-        sf::Vector2f lastPosition; //for collisions 
+        sf::Vector2f lastPosition; //for collisions
+
+        /** sounds **/
+        sf::Sound jumpSound;
+
+        void updateSoundsPosition();
 
 
     public:

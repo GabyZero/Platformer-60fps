@@ -17,6 +17,8 @@ void Gamev1::run()
     bool paused = false;
 
     window.setFramerateLimit(_FPS+2);
+
+    audioManager.start();
     
     sf::Time begin = clock.getElapsedTime();
     while (window.isOpen())
@@ -38,10 +40,12 @@ void Gamev1::run()
             manageEvents();
 
             scene.update(dt);
-            scene.updatePhysics(1/30.f);
+            scene.updatePhysics(dt);
             ui.update(dt);
 
-            view.setCenter(scene.player.getPosition());
+            sf::Vector2f pposition = scene.player.getPosition();
+            view.setCenter(pposition);
+            
             window.setView(view);
 
             scene.render(window);
