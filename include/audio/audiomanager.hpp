@@ -16,7 +16,7 @@ public:
     ~AudioManager();
 
     void setMusic(sf::Music&);
-    //void setCenter(int x, int y);
+    void setCenter(const sf::Vector2f&);
 
     void start();
     void stop();

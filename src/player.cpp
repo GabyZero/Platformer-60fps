@@ -28,7 +28,7 @@ void Player::initPlayer()
     lastPosition = getPosition();
 
     jumpSound.setBuffer(resources::ResourcesManager::instance().sounds.getAsset("jump1"));
-    
+    jumpSound.setRelativeToListener(true);
 }
 
 void Player::stopJumping()
@@ -112,11 +112,6 @@ void Player::updatePhysics(_Float32 dt)
     //std::cout << "yAccel = " << yAcceleration << std::endl;
 }
 
-void Player::updateSoundsPosition()
-{
-    jumpSound.setPosition(getPosition().x, getPosition().y, 0);
-}
-
 void Player::update(_Float32 dt)
 {   
     lastPosition = getPosition();
@@ -154,7 +149,6 @@ void Player::update(_Float32 dt)
 
     sprite->update(dt);
     
-    //updateSoundsPosition();
 
     //std::cout << "Life : " << life << std::endl;
 }

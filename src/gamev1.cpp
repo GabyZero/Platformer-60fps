@@ -43,9 +43,9 @@ void Gamev1::run()
             scene.updatePhysics(dt);
             ui.update(dt);
 
-            sf::Vector2f pposition = scene.player.getPosition();
-            view.setCenter(pposition);
-            
+            view.setCenter(scene.player.getPosition());
+            audioManager.setCenter(scene.player.getPosition());
+
             window.setView(view);
 
             scene.render(window);

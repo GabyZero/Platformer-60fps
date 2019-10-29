@@ -18,7 +18,6 @@ class Player : public physics::ICollidable{
         /** sounds **/
         sf::Sound jumpSound;
 
-        void updateSoundsPosition();
 
 
     public:
