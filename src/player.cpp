@@ -98,20 +98,24 @@ void Player::updatePhysics(_Float32 dt)
 void Player::update(_Float32 dt)
 {
     lastPosition = getPosition();
+    acceleration.x = 0;
+
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
     {
         sprite->setState(resources::ResourcesManager::PlayerState::runL);
         state = State::left;
-        sprite->setPosition(sprite->getPosition().x - (speed * dt), sprite->getPosition().y);
+        //sprite->setPosition(sprite->getPosition().x - (speed * dt), sprite->getPosition().y);
+        acceleration.x = -speed;
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
         sprite->setState(resources::ResourcesManager::PlayerState::runR);
         state = State::right;
-        sprite->setPosition(sprite->getPosition().x + (speed * dt), sprite->getPosition().y);
+        //sprite->setPosition(sprite->getPosition().x + (speed * dt), sprite->getPosition().y);
+        acceleration.x = speed;
     }
     else
-    {
+    {   
         if(state==State::right){ sprite->setState(resources::ResourcesManager::PlayerState::iddleR);}
         else if(state==State::left){ sprite->setState(resources::ResourcesManager::PlayerState::iddleL);}
         if(state!=State::iddleR)

@@ -6,6 +6,7 @@ namespace physics
 {
     void RigidBody::horizontalCollisionEnter(const ICollidable &collidable)
     {
+        std::cout << "oui" << std::endl;
         sf::Vector2f cpos = collidable.getPosition();
         float cwidth = collidable.getGlobalBounds().width;
         if(cpos.x>lastposition.x)
@@ -21,7 +22,6 @@ namespace physics
 
     void RigidBody::verticalCollisionEnter(const ICollidable &collidable)
     {
-        std::cout << "non" << std::endl;
         sf::Vector2f cpos = collidable.getPosition();
         float cheight = collidable.getGlobalBounds().height;
         if(cpos.y>lastposition.y)

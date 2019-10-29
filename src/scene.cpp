@@ -2,7 +2,6 @@
 
 #include "resources/resourcesmanager.hpp"
 #include <iostream>
-#include "debug/debugger.hpp"
 
 #include "animatedblock.hpp"
 #include "graphics/statesprite.hpp"
@@ -64,6 +63,13 @@ void Scene::managePlayerCollisions(float dt)
         {
             player.verticalCollisionEnter(*col);
             col->verticalCollisionEnter(player);
+        }
+        if(physics::CollisionDetector::nextFrameHorizontalCollision(player, *col, dt))
+        {
+            /*std::cout << player.lastposition << " - ";
+            std::cout << col->getPosition() << std::endl;*/
+            player.horizontalCollisionEnter(*col);
+            col->horizontalCollisionEnter(player);   
         }
     } //foreach collidable
 

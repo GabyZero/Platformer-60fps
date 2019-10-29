@@ -28,7 +28,6 @@ struct CollisionDetector
 
     static bool nextFrameVerticalCollision(const RigidBody& rb, const ICollidable &col, float dt)
     {
-        std::cout << rb.acceleration << std::endl;
         sf::Vector2f rbpos = rb.lastposition;
         sf::FloatRect rbgb = rb.getGlobalBounds();
         
@@ -57,12 +56,6 @@ struct CollisionDetector
         ray1.p2 = ray1.p1; ray1.p2.y -= (rb.acceleration.y*dt);
         ray2.p2 = ray2.p1; ray2.p2.y -= (rb.acceleration.y*dt);
         ray3.p2 = ray3.p1; ray3.p2.y -= (rb.acceleration.y*dt);
-        /*std::cout << "Ray1";
-        std::cout << ray1.p1 << " " << ray1.p2 << std::endl;
-        std::cout << "Ray2";
-        std::cout << ray2.p1 << " " << ray2.p2 << std::endl;
-        std::cout << "Line";
-        std::cout << line.p1 << " " << line.p2 << std::endl;*/
 
         return (isBetween(ray1.p1.x, line.p1.x, line.p2.x) && isBetween(line.p1.y, ray1.p1.y, ray1.p2.y)) ||
                (isBetween(ray2.p1.x, line.p1.x, line.p2.x) && isBetween(line.p1.y, ray2.p1.y, ray2.p2.y)) ||
@@ -72,17 +65,43 @@ struct CollisionDetector
 
     static bool nextFrameHorizontalCollision(const RigidBody& rb, const ICollidable &col, float dt)
     {
-        if(rb.acceleration.x>0)
-        {
+        if(rb.acceleration.x==0) return false;
+        sf::Vector2f rbpos = rb.lastposition;
+        sf::FloatRect rbgb = rb.getGlobalBounds();
+        // need the third ray in the center, if my rb height > coll height
+        Line ray1, ray2, ray3;
+        Line line;
 
-        }
-        else if(rb.acceleration.x<0)
+        if(rb.acceleration.x<0)
         {
-            
+            ray1.p1 = rbpos;
+            ray2.p1 = rbpos; ray2.p1.y+=rbgb.height;
+            ray3.p1 = rbpos; ray3.p1.y+=(rbgb.height/2.0f);
+            line.p1 = col.getPosition(); line.p1.x+=col.getGlobalBounds().width;
         }
+        else if(rb.acceleration.x>0)
+        {
+            ray1.p1 = rbpos; ray1.p1.x+=rbgb.width;
+            ray2.p1 = rbpos; ray2.p1.x+=rbgb.width; ray2.p1.y += rbgb.height;
+            ray3.p1 = rbpos; ray3.p1.x+=rbgb.width; ray3.p1.y+=(rbgb.height/2.0f);
+            line.p1 = col.getPosition();
+        }
+
+        line.p2 = line.p1; 
+        line.p2.y += col.getGlobalBounds().height;
+
+        ray1.p2 = ray1.p1; ray1.p2.x += (rb.acceleration.x*dt);
+        ray2.p2 = ray2.p1; ray2.p2.x += (rb.acceleration.x*dt);
+        ray3.p2 = ray3.p1; ray3.p2.x += (rb.acceleration.x*dt);
+
+        return (isBetween(ray1.p1.y, line.p1.y, line.p2.y) && isBetween(line.p1.x, ray1.p1.x, ray1.p2.x)) ||
+               (isBetween(ray2.p1.y, line.p1.y, line.p2.y) && isBetween(line.p1.x, ray2.p1.x, ray2.p2.x)) ||
+               (isBetween(ray3.p1.y, line.p1.y, line.p2.y) && isBetween(line.p1.x, ray3.p1.x, ray3.p2.x)) ; 
+
     }
-};
 
-}
+};//class
+
+}//namespace
 
 #endif

@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+
 Gamev1::Gamev1():Game()
 {}
 
@@ -53,7 +54,6 @@ void Gamev1::run()
         dt = (end-begin).asSeconds();
 
         begin = end;
-        std::cout << "frame" << std::endl;
-        //std::cout << 1.0f/dt << std::endl;
+        std::cout << 1.0f/dt << std::endl;
     }
 }
