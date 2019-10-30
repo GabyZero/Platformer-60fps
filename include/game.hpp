@@ -10,7 +10,7 @@
 #include "event.hpp"
 #include "ui/uimanager.hpp"
 
-#define _FPS 60
+#define _FPS 20
 #define _WIDTH 800
 #define _HEIGHT 800
 #define _CAMERA_WIDTH 333
@@ -36,6 +36,7 @@ class Game{
 
         std::queue<Event> eventList;
         
+        static bool pause;
 
     public:
         Scene scene;
@@ -49,6 +50,8 @@ class Game{
         void manageEvents();
         void handleEvent(Event&);
 
+
+        static void setPause(bool);
         /** Game loop, to be implemented**/
         virtual void run() = 0;
 

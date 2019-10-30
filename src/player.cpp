@@ -8,6 +8,8 @@
 #include "graphics/statesprite.hpp"
 #include "game.hpp"
 
+#include "debug/debugger.hpp"
+
 Player::Player() : sprite()
 {
     life=_PLAYER_MAXLIFE;
@@ -18,6 +20,12 @@ void Player::setPosition(float x, float y)
 {
     sprite->setPosition(x,y);
 }
+
+void Player::setPosition(sf::Vector2f pos)
+{
+    sprite->setPosition(pos);
+}
+
 
 void Player::setY(float y)
 {
@@ -40,7 +48,6 @@ void Player::initPlayer()
     sf::FloatRect rest =sprite->getGlobalBounds();
     sprite->setScale(_PLAYER_WIDTH/rest.width, _PLAYER_HEIGHT/rest.height);
     
-    lastPosition = getPosition();
     
     //acceleration.y = -0.1f;
 }
@@ -67,16 +74,28 @@ sf::FloatRect Player::getGlobalBounds() const
     return sprite->getGlobalBounds();
 }
 
-void Player::verticalCollisionEnter(const physics::ICollidable& col)
+/*void Player::verticalCollisionEnter(const physics::ICollidable& col)
 {
     physics::RigidBody::verticalCollisionEnter(col);
     if(col.getPosition().y >= getPosition().y)
         canJump=true; //can jump if the player touch the ground
+}*/
+
+void Player::collisionEnter(const physics::ICollidable& col, sf::FloatRect collision)
+{
+    physics::RigidBody::collisionEnter(col, collision);
+    if(collision.width > collision.height && collision.top == col.getGlobalBounds().top && acceleration.y < .0f)
+    {
+        std::cout << "I CAN JUMP BECAUSE : collision:";
+        Debugger::print(collision); std::cout << " on "; Debugger::print(col.getGlobalBounds());
+        std::cout << std::endl;
+        //Game::setPause(true);
+        canJump=true; //can jump if the player touch the ground
+    }
 }
 
 void Player::updatePhysics(_Float32 dt)
 {
-    physics::RigidBody::updatePhysics(dt);
     acceleration.y += -9*dt; //gravity
     if (acceleration.y != 0)
     {
@@ -92,12 +111,13 @@ void Player::updatePhysics(_Float32 dt)
         }
         acceleration.y -= jumpSpeed * dt * 2; //TODO gravity
     }
+    physics::RigidBody::updatePhysics(dt);
+
     //std::cout << "yAccel = " << yAcceleration << std::endl;
 }
 
 void Player::update(_Float32 dt)
 {
-    lastPosition = getPosition();
     acceleration.x = 0;
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
@@ -134,6 +154,7 @@ void Player::update(_Float32 dt)
     }
 
     sprite->update(dt);
+    physics::RigidBody::update(dt);
 
     //std::cout << "Life : " << life << std::endl;
 }

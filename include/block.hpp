@@ -21,8 +21,9 @@ public:
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
     /** ICollidable implementation **/
-    virtual void verticalCollisionEnter(const ICollidable &collidable);
-        virtual void horizontalCollisionEnter(const ICollidable &collidable);
+    /*virtual void verticalCollisionEnter(const ICollidable &collidable);
+        virtual void horizontalCollisionEnter(const ICollidable &collidable);*/
+    virtual void collisionEnter(const ICollidable &collidable, sf::FloatRect collision);
     virtual const sf::Vector2f& getPosition() const;
     virtual sf::FloatRect getGlobalBounds() const;
     virtual void update(float);

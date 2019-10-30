@@ -12,12 +12,12 @@ class Player : public physics::RigidBody{
         //TODO: max velocity
         float apexJumpTime = .0f;
 
-        sf::Vector2f lastPosition; //for collisions 
 
 
     protected:
         /** rigid body **/
-        virtual void setPosition(float,float) ;
+        virtual void setPosition(float,float);
+        virtual void setPosition(sf::Vector2f);
         virtual void setX(float);
         virtual void setY(float);
 
@@ -50,7 +50,9 @@ class Player : public physics::RigidBody{
         virtual sf::FloatRect getGlobalBounds() const;
 
         /** Rigidbody **/
-        virtual void verticalCollisionEnter(const ICollidable&);
+        //virtual void verticalCollisionEnter(const ICollidable&);
+        virtual void collisionEnter(const ICollidable &collidable, sf::FloatRect collision);
+      
 
         void stopJumping();
 
