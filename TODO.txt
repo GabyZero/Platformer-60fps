@@ -1,1 +1,2 @@
-Hauteur du saut non constante aie aie aie
+1. detecter l'arrivée dans le vide pour faire tomber plus vite
+2. faire tomber plus vite quand on se cogne la tete
