@@ -77,7 +77,7 @@ void RigidBody::collisionEnter(const ICollidable &collidable, sf::FloatRect coll
         if(acceleration.x==0)
         {
             std::cout << "Shall not be there" << std::endl;
-            Game::setPause(true);
+            //Game::setPause(true);
             return;
         }
         //left or right

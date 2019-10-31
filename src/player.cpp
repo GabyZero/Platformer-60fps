@@ -96,7 +96,7 @@ void Player::collisionEnter(const physics::ICollidable& col, sf::FloatRect colli
 
 void Player::updatePhysics(_Float32 dt)
 {
-    acceleration.y += -9*dt; //gravity
+    if(acceleration.y<=0) acceleration.y -= jumpSpeed*dt;  //gravity
     if (acceleration.y != 0)
     {
         if (acceleration.y > 0)
@@ -104,12 +104,12 @@ void Player::updatePhysics(_Float32 dt)
 
         //acceleration.y = std::clamp(acceleration.y*dt, -(float)_TILE_HEIGHT, (float)_TILE_HEIGHT)/dt; //todo veloticity maximum par rapport à dt
 
-        if (apexJumpTime > 0.5 /*apex*/)
+        if (apexJumpTime > 0.3 /*apex*/)
         {
-            acceleration.y = 0.f;
+            acceleration.y = jumpSpeed*-.5f;
             apexJumpTime = 0;
         }
-        acceleration.y -= jumpSpeed * dt * 2; //TODO gravity
+        //TODO gravity
     }
     physics::RigidBody::updatePhysics(dt);
 

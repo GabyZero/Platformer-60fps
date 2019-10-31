@@ -2,6 +2,8 @@
 
 #include "debug/debugger.hpp"
 
+#include "game.hpp"
+
 #include <iostream>
 
 namespace physics
@@ -13,28 +15,28 @@ namespace physics
 
     bool CollisionDetector::lineLineIntersect(const Line& line1, const Line& line2, sf::FloatRect& collision)
     {
-        try{
-            float uA = ((line2.p2.x-line2.p1.x)*(line1.p1.y-line2.p1.y)) - ((line2.p2.y-line2.p1.y)*(line1.p1.x-line2.p1.x))
-                      /((line2.p2.y-line2.p1.y)*(line1.p1.x-line2.p1.x)) - ((line2.p2.x-line2.p1.x)*(line1.p1.y-line2.p1.y));
+        std::cout << "Testing: [";Debugger::print(line1.p1);Debugger::print(line1.p2);std::cout<<"] versus ";
+                 std::cout << "[";Debugger::print(line2.p1),Debugger::print(line2.p2);std::cout<<"]=>";
+  
+        float dem = ((line2.p2.y-line2.p1.y)*(line1.p2.x-line1.p1.x)) - ((line2.p2.x-line2.p1.x)*(line1.p2.y-line1.p1.y));
+        if(dem==0) {std::cout << std::endl;return false;} //line are parralel (if numerator==0 then they are coincident)
 
-            float uB = ((line1.p2.x-line1.p1.x)*(line1.p1.y-line2.p1.y)) - ((line1.p2.y-line1.p1.y)*(line1.p1.x-line2.p1.x))
-                      /((line1.p2.y-line1.p1.y)*(line1.p1.x-line2.p1.x)) - ((line1.p2.x-line1.p1.x)*(line1.p1.y-line2.p1.y));
+        float uA = (((line2.p2.x-line2.p1.x)*(line1.p1.y-line2.p1.y)) - ((line2.p2.y-line2.p1.y)*(line1.p1.x-line2.p1.x)))/dem;
+        
+        float uB = (((line1.p2.x-line1.p1.x)*(line1.p1.y-line2.p1.y)) - ((line1.p2.y-line1.p1.y)*(line1.p1.x-line2.p1.x)))/dem;
 
-            //if uA or uB > 1 then the intersection is not on the line
-            //if uA and uB == 0 then the lines are parallel
+        std::cout << uA << " " << uB << std::endl;
 
-            if(uA>=0 && uA <=1 && uB>=0 && uB<=1)
-            {
-                collision = sf::FloatRect(line1.p1.x+(uA*(line1.p2.x-line1.p1.x)),
-                                          line1.p1.y+(uA*(line1.p2.y-line1.p1.y)),1,1);
-                return true;
-            }
-            else return false;
-        }catch(std::exception)
+        //if uA or uB > 1 then the intersection is not on the line
+        //if uA and uB == 0 then the lines are parallel
+
+        if(uA>=0 && uA <=1 && uB>=0 && uB<=1)
         {
-            //divide per 0 if lines are coincidents
-            return false; //should return a collsion
+            collision = sf::FloatRect(line1.p1.x+(uA*(line1.p2.x-line1.p1.x)),
+                                      line1.p1.y+(uA*(line1.p2.y-line1.p1.y)),1,1);
+            return true;
         }
+        else return false;
     }
 
     float distance2(const sf::Vector2f& p1, const sf::Vector2f& p2)
@@ -47,6 +49,9 @@ namespace physics
         sf::FloatRect* res = nullptr;
         float dres = 0;
         sf::FloatRect left, right, top, bottom; //width and height = 0 means no collision
+
+        std::cout << "*** LineRect ***" << std::endl;
+        std::cout << "[";Debugger::print(line.p1);Debugger::print(line.p2);std::cout << "] versus "; Debugger::print(rect); std::cout << std::endl;
         
         //we have to test every side since it can have more than one collision
         if(lineLineIntersect(line, {rect.left, rect.top, rect.left, rect.top+rect.height},left))
@@ -64,7 +69,7 @@ namespace physics
             }
         }
         if(lineLineIntersect(line, {rect.left, rect.top, rect.left+rect.width, rect.top},top))
-        {
+        {   
             if(res==nullptr) res =&top;
             float dtop = distance2(line.p1,sf::Vector2f(top.left,top.top));
             if(dtop<dres)
@@ -84,9 +89,8 @@ namespace physics
         if(res!=nullptr)
         {
             collision = *res;
-            collision.width = std::abs(collision.left-rect.left);
-            collision.height = std::abs(collision.top-rect.top);
             std::cout << "Line intersect found the next collision" << std::endl;
+            //Game::setPause(true);
             return true;
         }
         else return false;
@@ -101,7 +105,15 @@ namespace physics
         ray.p1.x = rb.getGlobalBounds().left; ray.p1.y = rb.getGlobalBounds().top;
         ray.p2.x = nextpos.left; ray.p2.y = nextpos.top;
 
-        return lineRectIntersect(ray,col.getGlobalBounds(),collision) || nextpos.intersects(col.getGlobalBounds(),collision) ;
+        if(lineRectIntersect(ray, col.getGlobalBounds(), collision))
+        {
+            collision.height = std::abs(collision.top - nextpos.top) 
+                            + (((rb.acceleration.y>0&&nextpos.top<col.getGlobalBounds().top) ||rb.acceleration.y<0)?nextpos.height:0);
+            collision.width =  std::abs(collision.left - nextpos.left)
+                            + (((rb.getGlobalBounds().left>col.getGlobalBounds().left&&nextpos.left<col.getGlobalBounds().left) ||rb.getGlobalBounds().left<col.getGlobalBounds().left)?nextpos.width:0);
+            return true;
+        }
+        else return nextpos.intersects(col.getGlobalBounds(),collision)  ;
 
     }
 

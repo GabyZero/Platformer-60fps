@@ -47,8 +47,8 @@ void Scene::initScene()
 /** return true if the collision test is relevent **/
 bool isCollisionTestRelevent(const sf::FloatRect &player, const sf::FloatRect &collidable, sf::Vector2f accel)
 {
-    return std::abs(player.top - collidable.top) <= (_PLAYER_HEIGHT+std::abs(accel.x))
-        && std::abs(player.left - collidable.left)<= (_PLAYER_WIDTH+std::abs(accel.y)); 
+    return std::abs(player.top - collidable.top) <= (_PLAYER_HEIGHT+std::abs(accel.y))
+        && std::abs(player.left - collidable.left)<= (_PLAYER_WIDTH+std::abs(accel.x)); 
 }
 
 void Scene::managePlayerCollisions(float dt)
