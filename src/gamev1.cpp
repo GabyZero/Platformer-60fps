@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+
 Gamev1::Gamev1():Game()
 {}
 
@@ -14,7 +15,6 @@ void Gamev1::run()
     _Float32 dt = 1.0f / _FPS; 
     sf::Clock clock;
 
-    bool paused = false;
 
     window.setFramerateLimit(_FPS+2);
 
@@ -30,10 +30,9 @@ void Gamev1::run()
                 window.close();
         }
 
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::C)) paused = true;
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::V)) paused = false;
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) break;
-        if(!paused)
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) Game::setPause(false);
+        if(!pause)
         {
             window.clear();
 
@@ -51,13 +50,15 @@ void Gamev1::run()
             scene.render(window);
             ui.render(window);
             window.display();
+            std::cout <<std::endl<< "NEW FRAME" << std::endl << std::endl;
+            //setPause(true);
+
         }
 
         sf::Time end = clock.getElapsedTime();
         dt = (end-begin).asSeconds();
 
         begin = end;
-
         //std::cout << 1.0f/dt << std::endl;
     }
 }

@@ -4,21 +4,26 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "graphics/statesprite.hpp"
-#include "physics/icollidable.hpp"
+#include "physics/rigidbody.hpp"
 
-class Player : public physics::ICollidable{
+class Player : public physics::RigidBody{
     private:
         float speed = 150.0f; //todo const
         float jumpSpeed = 300.0f ; // todo const
         //TODO: max velocity
         float apexJumpTime = .0f;
 
-        sf::Vector2f lastPosition; //for collisions
-
         /** sounds **/
         sf::Sound jumpSound;
 
 
+
+    protected:
+        /** rigid body **/
+        virtual void setPosition(float,float);
+        virtual void setPosition(sf::Vector2f);
+        virtual void setX(float);
+        virtual void setY(float);
 
     public:
         /** attributes **/
@@ -30,7 +35,7 @@ class Player : public physics::ICollidable{
 
         State state;
 
-         _Float32 yAcceleration = 0.0f;
+        // _Float32 yAcceleration = 0.0f;
         bool canJump = false;
 
         int life, maxLife;
@@ -45,15 +50,18 @@ class Player : public physics::ICollidable{
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
         /** ICollidable implementation **/
-        virtual void collisionEnter(const ICollidable &collidable, sf::FloatRect collision);
         virtual const sf::Vector2f& getPosition() const;
         virtual sf::FloatRect getGlobalBounds() const;
 
+        /** Rigidbody **/
+        //virtual void verticalCollisionEnter(const ICollidable&);
+        virtual void collisionEnter(const ICollidable &collidable, sf::FloatRect collision);
+      
 
         void stopJumping();
 
-        void updatePhysics(_Float32);
-        void update(_Float32);
+        virtual void updatePhysics(_Float32);
+        virtual void update(_Float32);
 };
 
 #endif

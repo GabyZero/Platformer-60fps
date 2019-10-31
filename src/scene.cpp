@@ -1,14 +1,16 @@
 #include "scene.hpp"
 
+#include "debug/debugger.hpp"
+
 #include "resources/resourcesmanager.hpp"
 #include <iostream>
-#include "debug/debugger.hpp"
 
 #include "animatedblock.hpp"
 #include "graphics/statesprite.hpp"
 #include "resources/resourcesmanager.hpp"
 #include "special/specialblock.hpp"
 #include "special/icomportment.hpp"
+#include "physics/collisiondetector.hpp"
 
 #include "event.hpp"
 
@@ -43,30 +45,38 @@ void Scene::initScene()
 }
 
 /** return true if the collision test is relevent **/
-bool isCollisionTestRelevent(const sf::FloatRect &player, const sf::FloatRect &collidable)
+bool isCollisionTestRelevent(const sf::FloatRect &player, const sf::FloatRect &collidable, sf::Vector2f accel)
 {
-    return std::abs(player.top - collidable.top) < 20  
-        && std::abs(player.left - collidable.left) <20;
+    return std::abs(player.top - collidable.top) <= (_PLAYER_HEIGHT+std::abs(accel.y))
+        && std::abs(player.left - collidable.left)<= (_PLAYER_WIDTH+std::abs(accel.x)); 
 }
 
-void Scene::managePlayerCollisions()
+void Scene::managePlayerCollisions(float dt)
 {
+    std::cout << "**** COLLISIONS ****" << std::endl;
     sf::FloatRect rectP;
     sf::FloatRect rectTmp;
-
     for(physics::ICollidable *col : level.collidable) 
     {
-        rectP = player.sprite->getGlobalBounds();
-        if(!isCollisionTestRelevent(rectP, col->getGlobalBounds())) continue;
+        rectP = player.getGlobalBounds();
+        if(!isCollisionTestRelevent(rectP, col->getGlobalBounds(), player.acceleration*dt)) continue;
 
         //std::cout << sp.getGlobalBounds().height << " " << sp.getGlobalBounds().width << std::endl;
-        if(rectP.intersects(col->getGlobalBounds(),rectTmp))
+        /*if(physics::CollisionDetector::nextFrameVerticalCollision(player,*col, dt))
         {
-            /*std::cout << col->getGlobalBounds().left << " " << col->getGlobalBounds().top << std::endl;
-            std::cout << rectTmp.left << " " << rectTmp.top << " " <<
-            rectTmp.height << " " << rectTmp.width << std::endl;*/
+            player.verticalCollisionEnter(*col);
+            col->verticalCollisionEnter(player);
+        }
+        if(physics::CollisionDetector::nextFrameHorizontalCollision(player, *col, dt))
+        {
+            player.horizontalCollisionEnter(*col);
+            col->horizontalCollisionEnter(player);   
+        }*/
+        if(physics::CollisionDetector::nextFrameCollision(player, *col, dt,rectTmp))
+        {
+            //std::cout << rectTmp << std::endl;
             player.collisionEnter(*col, rectTmp);
-            col->collisionEnter(player, rectTmp);        
+            col->collisionEnter(*col, rectTmp);
         }
     } //foreach collidable
 
@@ -74,23 +84,23 @@ void Scene::managePlayerCollisions()
     for(physics::ICollidable *col : level.trigerrable)
     {
         rectP = player.sprite->getGlobalBounds();
-        if(!isCollisionTestRelevent(rectP, col->getGlobalBounds())) continue;
+        if(!isCollisionTestRelevent(rectP, col->getGlobalBounds(),player.acceleration*dt)) continue;
 
         //std::cout << sp.getGlobalBounds().height << " " << sp.getGlobalBounds().width << std::endl;
         if(rectP.intersects(col->getGlobalBounds(),rectTmp))
         {
             //player.collisionEnter(*col, rectTmp); player dont know since it's a trigger
-            col->collisionEnter(player, rectTmp);        
+            //col->collisionEnter(player, rectTmp);        
         }
     } //foreach triggerable
+    std::cout << "**** FIN COLLISIONS ****" << std::endl;
 }
 
 void Scene::updatePhysics(_Float32 dt)
-{
+{   
+    managePlayerCollisions(dt);
     player.updatePhysics(dt);
     level.updatePhysics(dt);
-
-    managePlayerCollisions();
 }
 
 void Scene::update(float dt)
