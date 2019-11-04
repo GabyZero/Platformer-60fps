@@ -59,6 +59,7 @@ void RigidBody::collisionEnter(const ICollidable &collidable, sf::FloatRect coll
         {
             nextposition = (nPos + sf::Vector2(.0f, collision.height * -1));
             acceleration.y = -.1f;
+            onGround = true;
             //canJump = true;
         }
         else if (acceleration.y > .0f) //is the player jumping ?
@@ -108,5 +109,7 @@ void RigidBody::update(float dt )
 void RigidBody::updatePhysics(float dt)
 {
     setPosition(nextposition);
+    //gravity managed by implementations
+    onGround=false;
 }
 } // namespace physics

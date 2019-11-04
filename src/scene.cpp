@@ -14,18 +14,6 @@
 
 #include "event.hpp"
 
-class duchmol : public special::IComportment
-{
-   using special::IComportment::IComportment;
-    public:
-        Event event;
-        duchmol(Game &game):IComportment(game){event.type = Event::EventType::PLAYER_DAMAGE;event.playerDamage.damage = 10;}
-        virtual void operator()(const physics::ICollidable &, sf::FloatRect )
-        {
-            game.addEvent(event);
-        }
-};
-
 Scene::Scene(Game &_game):
 game(_game),
 level(game)
@@ -37,9 +25,6 @@ void Scene::initScene()
     player.initPlayer();
     level.initLevel();
     //std::cout << "test : " << player.sprite.getPosition().x << " " << player.sprite.getPosition().x << std::endl;
-    special::SpecialBlock<AnimatedBlock> *test = new special::SpecialBlock<AnimatedBlock>(resources::ResourcesManager::instance().animations.getAsset("fire"), *new duchmol(game));
-    test->setPosition(player.getPosition().x + 20 , player.getPosition().y);
-    level.trigerrable.push_back(test);
 
     std::cout << "Scene loaded" << std::endl;
 }
@@ -87,10 +72,10 @@ void Scene::managePlayerCollisions(float dt)
         if(!isCollisionTestRelevent(rectP, col->getGlobalBounds(),player.acceleration*dt)) continue;
 
         //std::cout << sp.getGlobalBounds().height << " " << sp.getGlobalBounds().width << std::endl;
-        if(rectP.intersects(col->getGlobalBounds(),rectTmp))
+        if(physics::CollisionDetector::nextFrameCollision(player, *col, dt,rectTmp))
         {
-            //player.collisionEnter(*col, rectTmp); player dont know since it's a trigger
-            //col->collisionEnter(player, rectTmp);        
+            //player.collisionEnter(*col, rectTmp); player dont know about trigger
+            col->collisionEnter(*col, rectTmp);
         }
     } //foreach triggerable
     std::cout << "**** FIN COLLISIONS ****" << std::endl;

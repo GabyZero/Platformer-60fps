@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include "block.hpp"
+#include "special/specialblockfactory.hpp"
 
 #include "game.hpp"
 
@@ -19,6 +20,20 @@ Level::~Level()
 
     for (physics::ICollidable *col : trigerrable)
         delete col;
+}
+
+bool Level::initLevel(int id)
+{
+    collidable.clear();
+    trigerrable.clear();
+    others.clear();
+    if(id>=_GAME_NBLVL) return false;
+    else
+    {
+        std::cout << "Loading " << _LEVEL_PATH[id] << std::endl;
+        loadMap(std::string("resources/maps/")+_LEVEL_PATH[id]);
+        return true;
+    }
 }
 
 void Level::loadMap(const std::string path)
@@ -64,10 +79,27 @@ void Level::loadMap(const std::string path)
                     int id = rsc["layers"][i]["data"][h * width + w].as<int>() - 1;
                     if (id >= 0)
                     {
-                        auto pair = resources::ResourcesManager::instance().mapTileSet.getAsset(id);
-                        Block *block = new Block(pair.first, resources::ResourcesManager::instance().textures.getAsset(pair.second));
-                        block->setPosition(x, y);
-                        collidable.push_back(block);
+                        if(id>=_BEGIN_SPECIALTILE)
+                        {
+                            if(id==_BEGIN_SPECIALTILE+special::SpecialBlockFactory::SpecialBlockID::BEGIN) game.scene.player.sprite->setPosition(x,y);
+                            else
+                            {   
+                                auto pair = special::SpecialBlockFactory::getBlock(id, game);
+                                pair.first->setPosition(x, y);
+                                if(pair.second)
+                                    collidable.push_back(pair.first);
+                                else
+                                    trigerrable.push_back(pair.first);
+                            }
+                            
+                        }
+                        else
+                        {
+                            auto pair = resources::ResourcesManager::instance().mapTileSet.getAsset(id);
+                            Block *block = new Block(pair.first, resources::ResourcesManager::instance().textures.getAsset(pair.second));
+                            block->setPosition(x, y);
+                            collidable.push_back(block);
+                        }
                     }
                     x += size;
                 }
@@ -77,13 +109,14 @@ void Level::loadMap(const std::string path)
             break;
         }
     }
+    file.close();
 
     std::cout << "Map loaded" << std::endl;
 }
 
 void Level::initLevel()
 {
-    loadMap("resources/maps/map2.json");
+    loadMap("resources/maps/map0.json");
     /*sf::Sprite sprite(resources::ResourcesManager::instance().textures.getAsset("block"));
     sprite.setPosition(255,200);
     collidable.push_back(std::move(sprite));

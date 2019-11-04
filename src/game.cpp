@@ -27,14 +27,22 @@ void Game::manageEvents()
         handleEvent(eventList.front());
         eventList.pop();
     }
+    loading=false;
 }
 
 void Game::handleEvent(Event& evt)
 {
+    std::cout << "Handling an event" << std::endl;
     switch(evt.type)
     {
         case Event::EventType::PLAYER_DAMAGE:
             scene.player.life -= evt.playerDamage.damage;
+            break;
+        case Event::EventType::LEVEL_END:
+            if(loading)break;
+            loading=true;
+            if(!scene.level.initLevel(++level))
+                window.close();
             break;
         default:
             throw std::runtime_error("Event not handled");

@@ -15,27 +15,32 @@ namespace special{
 template<class TBLOC>
 class SpecialBlock : public TBLOC{
     private:
-        IComportment& comportment;
+        IComportment* comportment;
     
     public:
         /** constructor for animated block **/
-        SpecialBlock(const graphics::Animation& _animation, IComportment& _comportment):
+        SpecialBlock(const graphics::Animation& _animation, IComportment* _comportment):
     AnimatedBlock(_animation),comportment(_comportment)
     {
     }
 
 
         /** constructor for block not animated **/
-        SpecialBlock(sf::IntRect &_rect, const sf::Texture & _text,IComportment& _comportment):
+        SpecialBlock(sf::IntRect &_rect, const sf::Texture & _text,IComportment* _comportment):
     Block(_rect,_text),comportment(_comportment)
     {
 
     }
 
+    ~SpecialBlock()
+    {
+        delete comportment;
+    }
+
         /** ICollidable implementation **/
         virtual void collisionEnter(const physics::ICollidable &collidable, sf::FloatRect collision)
     {
-        comportment(collidable, collision);
+        (*comportment)(collidable, collision);
     }
         /** end ICollidable **/
 };

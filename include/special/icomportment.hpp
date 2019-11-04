@@ -18,13 +18,6 @@ namespace special {
             virtual void operator()(const physics::ICollidable &collidable, sf::FloatRect collision) = 0;
     };
 
-    /** comportment, every character collided shall die **/
-    class ComportmentDie : public IComportment{
-        public:
-            using IComportment::IComportment;
-            virtual void operator()(const physics::ICollidable &collidable, sf::FloatRect collision);
-    };
-
 }
 
 #endif

@@ -1,1 +1,4 @@
+<<<<<<< HEAD
 /!\ ne pas faire de physique sur master
+=======
+>>>>>>> predictive_collision

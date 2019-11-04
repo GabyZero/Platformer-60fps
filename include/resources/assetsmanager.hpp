@@ -41,6 +41,7 @@ namespace resources{
                     return *assets.at(id);
                 }catch(std::out_of_range)
                 {
+                    std::cout << "Error while getting " << id << std::endl;
                     throw AssetsManagerException();
                 }
             }
@@ -51,6 +52,7 @@ namespace resources{
                     return *assets.at(id);
                 }catch(std::out_of_range)
                 {
+                    std::cout << "Error while getting " << id << std::endl;
                     throw AssetsManagerException();
                 }
             }

@@ -26,6 +26,11 @@
 #define _TILE_WIDTH 16
 #define _TILE_HEIGHT 16
 
+#define _BEGIN_SPECIALTILE 84
+
+#define _GAME_NBLVL 2
+constexpr char* _LEVEL_PATH[]= {"map0.json", "map2.json"};
+
 
 /**
  * Main class of the game, will run the game loop
@@ -38,6 +43,8 @@ class Game{
         std::queue<Event> eventList;
         
         static bool pause;
+        bool loading = false; //for the switching of level game.cpp line:32
+        int level = 0;
 
     public:
         Scene scene;

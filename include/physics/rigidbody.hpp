@@ -11,6 +11,8 @@ class RigidBody : public ICollidable{
     public:
         sf::Vector2f acceleration;
         sf::Vector2f nextposition;
+
+        bool isGravity = true;
         
         /** icollidable **/
         /*virtual void verticalCollisionEnter(const ICollidable &collidable);
@@ -32,6 +34,8 @@ class RigidBody : public ICollidable{
         virtual void setPosition(float,float) = 0;
         virtual void setX(float) = 0;
         virtual void setY(float) = 0;
+
+        bool onGround = false;
 };
 
 }

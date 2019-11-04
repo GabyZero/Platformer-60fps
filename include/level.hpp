@@ -21,7 +21,7 @@ class Level : public sf::Drawable{
 
         void loadMap(const std::string path);
         void initLevel();
-
+        bool initLevel(int);
         void update(const double);
         void updatePhysics(const double);
 

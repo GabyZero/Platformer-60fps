@@ -12,6 +12,9 @@ public:
     enum EventType
     {
         PLAYER_DAMAGE,
+        LEVEL_END,
+        GAME_END,
+        DEATH,
 
         COUNT
     };
