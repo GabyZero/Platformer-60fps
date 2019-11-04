@@ -1,4 +1,1 @@
-<<<<<<< HEAD
-/!\ ne pas faire de physique sur master
-=======
->>>>>>> predictive_collision
+create a make build that create the bin dir
