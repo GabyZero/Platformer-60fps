@@ -27,6 +27,10 @@ struct end : public special::IComportment
         }
 };
 
+
+
+
+
 SpecialBlock<AnimatedBlock>* SpecialBlockFactory::getFlame(Game &game)
 {
     return new special::SpecialBlock<AnimatedBlock>(resources::ResourcesManager::instance().animations.getAsset("fire"), new flame(game));
@@ -36,6 +40,15 @@ SpecialBlock<Block> *SpecialBlockFactory::getEnd(Game& game)
 {
     auto pair = resources::ResourcesManager::instance().mapTileSet.getAsset(31); //invisible block
     return new special::SpecialBlock<Block>(pair.first, resources::ResourcesManager::instance().textures.getAsset(pair.second), new end(game));
+}
+
+AnimatedBlock *SpecialBlockFactory::getCastle()
+{
+    graphics::Animation& anim = resources::ResourcesManager::instance().animations.getAsset("castle");
+    std::cout << "Returning a castle" << std::endl;
+    AnimatedBlock* res = new AnimatedBlock(anim,false);
+    res->setScale(250,250);
+    return res;
 }
 
 } // namespace special

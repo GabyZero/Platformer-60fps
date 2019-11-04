@@ -15,6 +15,7 @@ class AnimatedSprite : public sf::Sprite{
 
 
     public:
+        bool isPlaying = true;
         explicit AnimatedSprite(const Animation&);
 
         /** update the frame to the current frame, called by update **/

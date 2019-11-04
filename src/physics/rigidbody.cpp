@@ -49,7 +49,7 @@ sf::FloatRect RigidBody::nextPosition()
 
 void RigidBody::collisionEnter(const ICollidable &collidable, sf::FloatRect collision)
 {   
-    std::cout << "col : "; Debugger::print(collision); std::cout << std::endl;
+    //std::cout << "col : "; Debugger::print(collision); std::cout << std::endl;
     sf::Vector2f nPos = nextposition;
     sf::Vector2f lPos = getPosition();
     if (std::abs(lPos.x - collidable.getPosition().x) < std::abs(lPos.y - collidable.getPosition().y))
@@ -66,8 +66,8 @@ void RigidBody::collisionEnter(const ICollidable &collidable, sf::FloatRect coll
         {
             if (std::abs(lPos.x - collidable.getPosition().x) >= 15.9)
                 return;
-            std::cout << "OUCH MY HEAD collision:";
-            Debugger::print(collision); std::cout << " on "; Debugger::print(collidable.getGlobalBounds());
+            /*std::cout << "OUCH MY HEAD collision:";
+            Debugger::print(collision); std::cout << " on "; Debugger::print(collidable.getGlobalBounds());*/
             //Game::setPause(true);
             nextposition = (nPos + sf::Vector2(.0f, collision.height));
             acceleration.y = -.1f;
@@ -98,12 +98,12 @@ void RigidBody::collisionEnter(const ICollidable &collidable, sf::FloatRect coll
 
 void RigidBody::update(float dt )
 {   
-    std::cout << "Last position : ";  Debugger::print(getPosition());
-    std::cout << " Accelration : ";   Debugger::print(acceleration);
+    /*std::cout << "Last position : ";  Debugger::print(getPosition());
+    std::cout << " Accelration : ";   Debugger::print(acceleration);*/
     sf::Vector2f pos = getPosition();
     nextposition.x = pos.x + acceleration.x*dt;
     nextposition.y = pos.y - acceleration.y*dt;
-    std::cout << " Next position : "; Debugger::print(nextposition); std::cout << std::endl;
+    //std::cout << " Next position : "; Debugger::print(nextposition); std::cout << std::endl;
 }
 
 void RigidBody::updatePhysics(float dt)

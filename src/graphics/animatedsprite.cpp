@@ -27,6 +27,7 @@ void AnimatedSprite::resetAnim()
 
 void AnimatedSprite::update(float dt)
 {
+    if(!isPlaying) return;
     clock += sf::seconds(dt);
     if(clock>= animation->frameTime)
     {
@@ -47,7 +48,7 @@ void AnimatedSprite::update(float dt)
             }
             else
             {
-                //todo: stop animation
+                isPlaying=false;
             }
             
         }

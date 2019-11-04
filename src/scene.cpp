@@ -38,7 +38,7 @@ bool isCollisionTestRelevent(const sf::FloatRect &player, const sf::FloatRect &c
 
 void Scene::managePlayerCollisions(float dt)
 {
-    std::cout << "**** COLLISIONS ****" << std::endl;
+    //std::cout << "**** COLLISIONS ****" << std::endl;
     sf::FloatRect rectP;
     sf::FloatRect rectTmp;
     for(physics::ICollidable *col : level.collidable) 
@@ -78,7 +78,7 @@ void Scene::managePlayerCollisions(float dt)
             col->collisionEnter(*col, rectTmp);
         }
     } //foreach triggerable
-    std::cout << "**** FIN COLLISIONS ****" << std::endl;
+   // std::cout << "**** FIN COLLISIONS ****" << std::endl;
 }
 
 void Scene::updatePhysics(_Float32 dt)

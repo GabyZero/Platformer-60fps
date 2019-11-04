@@ -5,11 +5,17 @@ Block::Block()
     //sprite->setScale(_TILE_WIDTH/width,_TILE_HEIGHT/height); 
 }
 
-Block::Block(sf::IntRect& rect,const sf::Texture &text)
+Block::Block(sf::IntRect& rect,const sf::Texture &text,bool scalable)
 {   
     sprite = new sf::Sprite(text, rect);
-    sprite->setScale(_TILE_WIDTH/rect.width,_TILE_HEIGHT/rect.height); 
+    if(scalable) sprite->setScale(_TILE_WIDTH/rect.width,_TILE_HEIGHT/rect.height); 
 }
+
+void Block::setScale(float f1,float f2)
+{
+    sprite->setScale(f1/getGlobalBounds().width, f2/getGlobalBounds().height );
+}
+
 
 Block::~Block()
 {

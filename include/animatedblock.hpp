@@ -8,7 +8,7 @@ class AnimatedBlock : public Block
 {
     public:
         AnimatedBlock(){}
-        AnimatedBlock(const graphics::Animation&);
+        AnimatedBlock(const graphics::Animation&,bool scalable=true);
 
         virtual void update(float) override;
     

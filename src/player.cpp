@@ -86,9 +86,9 @@ void Player::collisionEnter(const physics::ICollidable& col, sf::FloatRect colli
     physics::RigidBody::collisionEnter(col, collision);
     if(collision.width > collision.height && collision.top == col.getGlobalBounds().top && acceleration.y < .0f)
     {
-        std::cout << "I CAN JUMP BECAUSE : collision:";
+        /*std::cout << "I CAN JUMP BECAUSE : collision:";
         Debugger::print(collision); std::cout << " on "; Debugger::print(col.getGlobalBounds());
-        std::cout << std::endl;
+        std::cout << std::endl;*/
         //Game::setPause(true);
         canJump=true; //can jump if the player touch the ground
     }
@@ -158,5 +158,5 @@ void Player::update(_Float32 dt)
     sprite->update(dt);
     physics::RigidBody::update(dt);
 
-    std::cout << "Life : " << life << std::endl;
+    //std::cout << "Life : " << life << std::endl;
 }

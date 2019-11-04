@@ -55,6 +55,10 @@ namespace resources{
             textures.addAsset("fire",texture);
 
             texture = new sf::Texture();
+            texture->loadFromFile(path+"animations/castle.png");
+            textures.addAsset("castle",texture);
+
+            texture = new sf::Texture();
             texture->loadFromFile(path+"player/player.png");
             textures.addAsset("playerA", texture);
         }catch(std::exception e)
@@ -99,6 +103,9 @@ namespace resources{
     {
         graphics::Animation *animation = new graphics::Animation(32,32,0,0,textures.getAsset("fire"), 3);
         animations.addAsset("fire",animation);
+
+        animation = new graphics::Animation(1446,1224,0,0,textures.getAsset("castle"), 2, sf::microseconds(1), false);
+        animations.addAsset("castle",animation);
 
         std::cout << "Animation loaded" << std::endl;
     }

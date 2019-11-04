@@ -28,10 +28,13 @@ void Gamev1::run()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
+                
         }
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) break;
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) Game::setPause(false);
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) Game::setPause(false); //debug
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) && sf::Keyboard::isKeyPressed(sf::Keyboard::M)) audioManager.setMute(false);
+        else if(sf::Keyboard::isKeyPressed(sf::Keyboard::M)){audioManager.setMute(true);}
         if(!pause)
         {
             window.clear();
@@ -50,7 +53,7 @@ void Gamev1::run()
             scene.render(window);
             ui.render(window);
             window.display();
-            std::cout <<std::endl<< "NEW FRAME" << std::endl << std::endl;
+            //std::cout <<std::endl<< "NEW FRAME" << std::endl << std::endl;
             //setPause(true);
 
         }

@@ -15,17 +15,17 @@ namespace physics
 
     bool CollisionDetector::lineLineIntersect(const Line& line1, const Line& line2, sf::FloatRect& collision)
     {
-        std::cout << "Testing: [";Debugger::print(line1.p1);Debugger::print(line1.p2);std::cout<<"] versus ";
-                 std::cout << "[";Debugger::print(line2.p1),Debugger::print(line2.p2);std::cout<<"]=>";
+        //std::cout << "Testing: [";Debugger::print(line1.p1);Debugger::print(line1.p2);std::cout<<"] versus ";
+                 //std::cout << "[";Debugger::print(line2.p1),Debugger::print(line2.p2);std::cout<<"]=>";
   
         float dem = ((line2.p2.y-line2.p1.y)*(line1.p2.x-line1.p1.x)) - ((line2.p2.x-line2.p1.x)*(line1.p2.y-line1.p1.y));
-        if(dem==0) {std::cout << std::endl;return false;} //line are parralel (if numerator==0 then they are coincident)
+        if(dem==0) {/*std::cout << std::endl;*/return false;} //line are parralel (if numerator==0 then they are coincident)
 
         float uA = (((line2.p2.x-line2.p1.x)*(line1.p1.y-line2.p1.y)) - ((line2.p2.y-line2.p1.y)*(line1.p1.x-line2.p1.x)))/dem;
         
         float uB = (((line1.p2.x-line1.p1.x)*(line1.p1.y-line2.p1.y)) - ((line1.p2.y-line1.p1.y)*(line1.p1.x-line2.p1.x)))/dem;
 
-        std::cout << uA << " " << uB << std::endl;
+        //std::cout << uA << " " << uB << std::endl;
 
         //if uA or uB > 1 then the intersection is not on the line
         //if uA and uB == 0 then the lines are parallel
@@ -50,8 +50,8 @@ namespace physics
         float dres = 0;
         sf::FloatRect left, right, top, bottom; //width and height = 0 means no collision
 
-        std::cout << "*** LineRect ***" << std::endl;
-        std::cout << "[";Debugger::print(line.p1);Debugger::print(line.p2);std::cout << "] versus "; Debugger::print(rect); std::cout << std::endl;
+        //std::cout << "*** LineRect ***" << std::endl;
+        //std::cout << "[";Debugger::print(line.p1);Debugger::print(line.p2);std::cout << "] versus "; Debugger::print(rect); std::cout << std::endl;
         
         //we have to test every side since it can have more than one collision
         if(lineLineIntersect(line, {rect.left, rect.top, rect.left, rect.top+rect.height},left))
@@ -89,7 +89,7 @@ namespace physics
         if(res!=nullptr)
         {
             collision = *res;
-            std::cout << "Line intersect found the next collision" << std::endl;
+            //std::cout << "Line intersect found the next collision" << std::endl;
             //Game::setPause(true);
             return true;
         }
@@ -99,8 +99,8 @@ namespace physics
     bool CollisionDetector::nextFrameCollision(RigidBody& rb, const ICollidable &col, float dt, sf::FloatRect& collision)
     {
         sf::FloatRect nextpos = rb.nextPosition();
-        std::cout << "TEST COLLISION" << std::endl;
-        Debugger::print(nextpos); std::cout << " - "; Debugger::print(col.getGlobalBounds()); std::cout << std::endl;
+        //std::cout << "TEST COLLISION" << std::endl;
+        //Debugger::print(nextpos); std::cout << " - "; Debugger::print(col.getGlobalBounds()); std::cout << std::endl;
         Line ray;
         ray.p1.x = rb.getGlobalBounds().left; ray.p1.y = rb.getGlobalBounds().top;
         ray.p2.x = nextpos.left; ray.p2.y = nextpos.top;

@@ -18,6 +18,8 @@ public:
     void setMusic(sf::Music&);
     void setCenter(const sf::Vector2f&);
 
+    void setMute(bool);
+
     void start();
     void stop();
 };

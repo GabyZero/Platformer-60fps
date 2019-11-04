@@ -13,12 +13,14 @@ protected:
 
 public:
     Block();
-    Block(sf::IntRect &, const sf::Texture &);
+    Block(sf::IntRect &, const sf::Texture &,bool scalable=true);
 
     ~Block();
 
     /** sf::Drawable implementaion **/
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
+
+    void setScale(float,float);
 
     /** ICollidable implementation **/
     /*virtual void verticalCollisionEnter(const ICollidable &collidable);

@@ -11,7 +11,7 @@ namespace special {
             SpecialBlockFactory();
 
         public:
-            enum SpecialBlockID{FIRE,BEGIN,END};
+            enum SpecialBlockID{FIRE,BEGIN,END,CASTLE};
 
             // return the pair {pointer to the block, boolean isCollidable}
             static std::pair<Block*,bool> getBlock(int id, Game& game)
@@ -23,6 +23,8 @@ namespace special {
                 
                 case _BEGIN_SPECIALTILE+SpecialBlockID::END:
                     return {getEnd(game),false};
+                case _BEGIN_SPECIALTILE+SpecialBlockID::CASTLE:
+                    return {getCastle(), false};
                 default:
                     std::cout << "Error while getting special block " + id << std::endl;
                     return {getFlame(game),true};
@@ -30,6 +32,7 @@ namespace special {
             }
             static SpecialBlock<AnimatedBlock> *getFlame(Game &);
             static SpecialBlock<Block> *getEnd(Game&);
+            static AnimatedBlock* getCastle();
         
     };
 }
