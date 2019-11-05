@@ -39,6 +39,9 @@ void Game::handleEvent(Event& evt)
             scene.player.life -= evt.playerDamage.damage;
             break;
         case Event::EventType::LEVEL_END:
+            scene.level.endLevel(0);
+            break;
+        case Event::NEXT_LEVEL:
             if(loading)break;
             loading=true;
             if(!scene.level.initLevel(++level))

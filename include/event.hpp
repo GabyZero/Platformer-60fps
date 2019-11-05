@@ -13,6 +13,7 @@ public:
     {
         PLAYER_DAMAGE,
         LEVEL_END,
+        NEXT_LEVEL,
         GAME_END,
         DEATH,
 

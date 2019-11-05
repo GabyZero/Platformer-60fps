@@ -38,6 +38,7 @@ bool Level::initLevel(int id)
 {
     collidable.clear();
     trigerrable.clear();
+    ela.init(); end=false;
     for (int i=0;i<LOCOUNT;++i){
         if(others[i] != nullptr)
             delete others[i];
@@ -173,10 +174,7 @@ void Level::switchLevel()
 
 void Level::endLevel(int newlevel)
 {
-    AnimatedBlock* bloc = new AnimatedBlock(resources::ResourcesManager::instance().animations.getAsset("explosion"),false);
-    bloc->setPosition(others[CASTLE]->getPosition().x-150, others[CASTLE]->getPosition().y-128);
-    others[EXPLOSION] = bloc;
-    ((AnimatedBlock*)dynamic_cast<AnimatedBlock*>(others[CASTLE]))->setPlaying(true);;
+    end = true;
 }
 
 void Level::update(const double dt)
@@ -189,6 +187,38 @@ void Level::update(const double dt)
     {
         if(others[i]!=nullptr)
             others[i]->update(dt);
+    }
+
+    if(end)
+    { //anim
+        ela.update(dt);
+        switch(ela.state)
+        {
+            case EndLevelAnim::MOVING:
+                if((others[CASTLE]->getPosition().x-game.scene.player.getPosition().x)<=58){
+                    ela.state = EndLevelAnim::EXPLOSION;    
+                    AnimatedBlock* bloc = new AnimatedBlock(resources::ResourcesManager::instance().animations.getAsset("explosion"),false);
+                    bloc->setPosition(others[CASTLE]->getPosition().x-150, others[CASTLE]->getPosition().y-128);
+                    others[EXPLOSION] = bloc;
+                    ((AnimatedBlock*)dynamic_cast<AnimatedBlock*>(others[CASTLE]))->setPlaying(true);
+                }
+                else
+                {
+                    
+                }
+                break;
+            case EndLevelAnim::WAIT:
+                std::cout << "waiting" << std::endl;
+                break;
+            case EndLevelAnim::GO:
+                Event evt;
+                evt.type = Event::NEXT_LEVEL;
+                std::cout << "GO" << std::endl;
+                game.addEvent(evt);
+                break;
+            default:
+            break;
+        }
     }
 }
 

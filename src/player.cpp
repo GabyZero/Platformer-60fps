@@ -164,5 +164,6 @@ void Player::update(_Float32 dt)
         death.type = Event::DEATH;
         game.addEvent(death);
     }
+
     //std::cout << "Life : " << life << std::endl;
 }

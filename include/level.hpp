@@ -4,6 +4,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "physics/icollidable.hpp"
+#include "endlevelanim.hpp"
 
 class Game;
 
@@ -20,6 +21,8 @@ class Level : public sf::Drawable{
         sf::FloatRect globalBounds;
 
         sf::Thread switchlevel;
+        EndLevelAnim ela;
+        bool end=false;
 
         Level(Game&);
         ~Level();
