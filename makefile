@@ -22,6 +22,15 @@ OBJS := $(addprefix $(OBJDIR)/, $(OBJS))
 # Rules
 all : $(EXECUTABLE)
 
+build :
+	mkdir bin
+	mkdir bin/audio
+	mkdir bin/debug
+	mkdir bin/graphics
+	mkdir bin/special
+	mkdir bin/ui
+	mkdir bin/resources
+	mkdir bin/physics
 
 $(EXECUTABLE) : $(OBJS)
 	$(CC) $^ $(LDFLAGS) -o $@\
