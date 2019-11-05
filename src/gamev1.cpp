@@ -68,7 +68,9 @@ void Gamev1::run()
 
         }
 
-        sf::Time end = clock.getElapsedTime();
+       sf::Time end = clock.getElapsedTime();
+
+        //dt = (end-begin).asSeconds();
 
         if(deltaManager.size()>=30)
             deltaManager.pop_front();
