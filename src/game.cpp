@@ -44,6 +44,10 @@ void Game::handleEvent(Event& evt)
             if(!scene.level.initLevel(++level))
                 window.close();
             break;
+        case Event::DEATH:
+            scene.level.initLevel(level);
+            scene.player.life = scene.player.maxLife;
+            break;
         default:
             throw std::runtime_error("Event not handled");
     }

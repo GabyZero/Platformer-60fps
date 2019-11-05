@@ -17,6 +17,8 @@ class Level : public sf::Drawable{
         enum LevelOther{CASTLE,EXPLOSION,LOCOUNT};
         physics::ICollidable** others;
 
+        sf::FloatRect globalBounds;
+
         sf::Thread switchlevel;
 
         Level(Game&);

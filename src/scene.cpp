@@ -16,7 +16,8 @@
 
 Scene::Scene(Game &_game):
 game(_game),
-level(game)
+level(game),
+player(game)
 {
 }
 

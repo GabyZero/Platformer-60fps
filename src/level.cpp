@@ -16,6 +16,8 @@ Level::Level(Game &_game) : game(_game), switchlevel(&Level::switchLevel, this)
     for (int i=0;i<LOCOUNT;++i)
         others[i] = nullptr;
 
+    globalBounds.top = 0;
+    globalBounds.left = 0;
 }
 
 Level::~Level()
@@ -36,10 +38,13 @@ bool Level::initLevel(int id)
 {
     collidable.clear();
     trigerrable.clear();
-        for (int i=0;i<LOCOUNT;++i)
-        delete others[i];
+    for (int i=0;i<LOCOUNT;++i){
+        if(others[i] != nullptr)
+            delete others[i];
+    }
 
-    delete[] others;
+    for (int i=0;i<LOCOUNT;++i)
+        others[i] = nullptr;
 
 
     if(id>=_GAME_NBLVL) return false;
@@ -73,6 +78,9 @@ void Level::loadMap(const std::string path)
             int size = _TILE_HEIGHT; //rsc["tileheight"].as<int>();
             int width = rsc["layers"][i]["width"].as<int>();
             int height = rsc["layers"][i]["height"].as<int>();
+
+            globalBounds.width = width * _TILE_WIDTH;
+            globalBounds.height = height * _TILE_HEIGHT;
 
             game.scene.player.sprite->setPosition(rsc["properties"]["player_pos_x"].as<int>() * size, rsc["properties"]["player_pos_y"].as<int>() * size);
 
@@ -184,8 +192,12 @@ void Level::update(const double dt)
     }
 }
 
-void Level::updatePhysics(const double)
+void Level::updatePhysics(const double dt)
 {
+    for (physics::ICollidable *col : collidable)
+        col->updatePhysics(dt);
+    for (physics::ICollidable *col : trigerrable)
+        col->updatePhysics(dt);
 }
 
 bool inView(const sf::Vector2f& pos, const sf::View &view){

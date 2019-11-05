@@ -10,7 +10,7 @@
 
 #include "debug/debugger.hpp"
 
-Player::Player() : sprite()
+Player::Player(Game &_game) : sprite(), game(_game)
 {
     life=_PLAYER_MAXLIFE;
     maxLife=_PLAYER_MAXLIFE;
@@ -157,6 +157,12 @@ void Player::update(_Float32 dt)
 
     sprite->update(dt);
     physics::RigidBody::update(dt);
-
+    
+    if(life<=0 || (!game.scene.level.globalBounds.intersects(sprite->getGlobalBounds())))
+    {
+        Event death;
+        death.type = Event::DEATH;
+        game.addEvent(death);
+    }
     //std::cout << "Life : " << life << std::endl;
 }

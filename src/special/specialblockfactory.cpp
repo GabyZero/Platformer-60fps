@@ -52,4 +52,18 @@ AnimatedBlock *SpecialBlockFactory::getCastle()
     return res;
 }
 
+MovingBlock* SpecialBlockFactory::getMovingBlockUp2()
+{
+    auto pair = resources::ResourcesManager::instance().mapTileSet.getAsset(53);
+    MovingBlock* bloc = new MovingBlock(pair.first, resources::ResourcesManager::instance().textures.getAsset(pair.second),2,{0,32});
+    return bloc;
+}
+
+MovingBlock* SpecialBlockFactory::getMovingBlockLeft2()
+{
+    auto pair = resources::ResourcesManager::instance().mapTileSet.getAsset(53);
+    MovingBlock* bloc = new MovingBlock(pair.first, resources::ResourcesManager::instance().textures.getAsset(pair.second),2,{-32,0});
+    return bloc;
+}
+
 } // namespace special

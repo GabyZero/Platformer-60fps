@@ -35,7 +35,7 @@ void Gamev1::run()
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) Game::setPause(false); //debug
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) && sf::Keyboard::isKeyPressed(sf::Keyboard::M)) audioManager.setMute(false);
         else if(sf::Keyboard::isKeyPressed(sf::Keyboard::M)){audioManager.setMute(true);}
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {scene.level.endLevel(level);scene.level.switchlevel.launch();}
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {scene.level.endLevel(level);/*scene.level.switchlevel.launch();*/}
         if(!pause)
         {
             window.clear();

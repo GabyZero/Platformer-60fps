@@ -6,6 +6,8 @@
 #include "graphics/statesprite.hpp"
 #include "physics/rigidbody.hpp"
 
+class Game;
+
 class Player : public physics::RigidBody{
     private:
         float speed = 150.0f; //todo const
@@ -28,6 +30,8 @@ class Player : public physics::RigidBody{
     public:
         /** attributes **/
 
+        Game& game;
+
         /*sf::Texture texture;*/
         graphics::AnimatedStateSprite* sprite;
 
@@ -42,7 +46,7 @@ class Player : public physics::RigidBody{
 
         /** constructor **/
 
-        Player();
+        Player(Game& game);
         void initPlayer();
         /** Method **/
 

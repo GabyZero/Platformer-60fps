@@ -31,7 +31,7 @@ public:
     virtual void update(float);
     /** end ifcollidable**/
 
-    void setPosition(float x, float y);
+    virtual void setPosition(float x, float y);
 
 };
 
