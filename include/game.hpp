@@ -13,9 +13,9 @@
 #include "audio/audiomanager.hpp"
 
 #define _FPS 60
-#define _WIDTH 800
-#define _HEIGHT 800
-#define _CAMERA_WIDTH 333
+#define _WIDTH 1280
+#define _HEIGHT 720
+#define _CAMERA_WIDTH 592
 #define _CAMERA_HEIGHT 333
 #define _GAMENAME "Plaformer random v0"
 

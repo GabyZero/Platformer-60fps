@@ -1,12 +1,20 @@
 #include "gamev1.hpp"
 
 #include <iostream>
-
+#include <deque>
 
 Gamev1::Gamev1():Game()
 {}
 
 Gamev1::~Gamev1(){}
+
+float avg(const std::deque<float> &q)
+{
+    float sum=0;
+    for(float f : q)  
+        sum+=f;
+    return sum/q.size();
+}
 
 void Gamev1::run()
 {
@@ -14,9 +22,10 @@ void Gamev1::run()
     
     _Float32 dt = 1.0f / _FPS; 
     sf::Clock clock;
+    std::deque<float> deltaManager;
+    deltaManager.push_back(dt);
 
-
-    window.setFramerateLimit(_FPS+2);
+    window.setFramerateLimit(_FPS+1);
 
     audioManager.start();
     
@@ -60,9 +69,12 @@ void Gamev1::run()
         }
 
         sf::Time end = clock.getElapsedTime();
-        dt = (end-begin).asSeconds();
 
+        if(deltaManager.size()>=30)
+            deltaManager.pop_front();
+        deltaManager.push_back((end-begin).asSeconds());
         begin = end;
+        dt = avg(deltaManager);
         std::cout << 1.0f/dt << std::endl;
     }
 }

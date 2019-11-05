@@ -9,7 +9,7 @@ struct flame : public special::IComportment
    //using special::IComportment::IComportment;
     public:
         Event event;
-        flame(Game &game):IComportment(game){event.type = Event::EventType::PLAYER_DAMAGE;event.playerDamage.damage = 10;} //not okay at all since it's ten per frame todo: need a timer or an invul phase
+        flame(Game &game):IComportment(game){event.type = Event::EventType::PLAYER_DAMAGE;event.playerDamage.damage = 100;} //not okay at all since it's ten per frame todo: need a timer or an invul phase
         virtual void operator()(const physics::ICollidable &, sf::FloatRect )
         {
             game.addEvent(event);
