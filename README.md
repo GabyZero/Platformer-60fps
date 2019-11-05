@@ -5,6 +5,7 @@
 To build from the sources and play use :
 
 ```
+make build
 make && ./exec
 ```
 
