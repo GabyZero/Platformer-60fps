@@ -31,7 +31,7 @@ namespace resources{
             /**name => animation **/
             AssetsManager<std::string, graphics::Animation> animations;
             
-            enum PlayerState{runL,runR,walkL,walkR,iddleL,iddleR};
+            enum PlayerState{runL,runR,walkL,walkR,iddleL,iddleR,dieL,dieR};
             AssetsManager<std::string, graphics::StateAnimation> stateAnimations; //todo: delete memory
 
             /** id => pair rect, tileset name **/

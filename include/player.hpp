@@ -35,7 +35,7 @@ class Player : public physics::RigidBody{
         /*sf::Texture texture;*/
         graphics::AnimatedStateSprite* sprite;
 
-        enum State { left, right, jump, iddleL, iddleR};
+        enum State { left, right, jump, iddleL, iddleR, death};
 
         State state;
 

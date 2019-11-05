@@ -160,8 +160,10 @@ void Player::update(_Float32 dt)
     
     if(life<=0 || (!game.scene.level.globalBounds.intersects(sprite->getGlobalBounds())))
     {
+        life = 0;
         Event death;
         death.type = Event::DEATH;
+        //sprite->setState(resources::ResourcesManager::PlayerState::dieR);
         game.addEvent(death);
     }
 

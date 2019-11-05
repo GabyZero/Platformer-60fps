@@ -209,6 +209,7 @@ void Level::update(const double dt)
                 break;
             case EndLevelAnim::WAIT:
                 std::cout << "waiting" << std::endl;
+                game.scene.player.state = Player::death;
                 break;
             case EndLevelAnim::GO:
                 Event evt;

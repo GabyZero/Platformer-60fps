@@ -119,7 +119,7 @@ namespace resources{
     }
     void ResourcesManager::loadStateAnimation()
     {
-        graphics::StateAnimation *anims = new graphics::StateAnimation(6);
+        graphics::StateAnimation *anims = new graphics::StateAnimation(8);
         const sf::Texture &t = textures.getAsset("playerA");
 
 
@@ -131,6 +131,10 @@ namespace resources{
         
         anims->animations[PlayerState::runL] = new graphics::Animation(17,22,102,0,t,{4,1},sf::seconds(0.15f)); //runL
         anims->animations[PlayerState::runR] = new graphics::Animation(17,22,102,24,t,{4,1},sf::seconds(0.15f)); //runR
+
+        //15  -> 7 frames
+        anims->animations[PlayerState::dieL] = new graphics::Animation(16,23,263,0,t,{7,1},sf::seconds(0.15f)); //runL
+        anims->animations[PlayerState::dieR] = new graphics::Animation(16,23,263,24,t,{7,1},sf::seconds(0.15f)); //runR
 
         stateAnimations.addAsset("player", anims);
 
@@ -154,9 +158,14 @@ namespace resources{
         /** Sound effect **/
         sf::SoundBuffer* sb = new sf::SoundBuffer();
         if(!sb->loadFromFile(path+"sound/jump1.ogg"))
-            std::cerr << "can't open" << path+"sound/jump1.ogg";
+            std::cerr << "can't open " << path+"sound/jump1.ogg";
 
         sounds.addAsset("jump1",sb);
+
+        sb = new sf::SoundBuffer();
+        if(!sb->loadFromFile(path+"sound/explosion.mp3"))
+            std::cerr << "can't open " << path+"sound/explosion.mp3";
+        sounds.addAsset("explosion",sb);
 
         std::cout << "Audio loaded" << std::endl;
 
