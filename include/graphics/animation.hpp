@@ -7,7 +7,7 @@ namespace graphics{
 
 struct Animation {
         const sf::Texture& texture;
-        const int nbFrames;
+        const sf::Vector2i nbFrames;
         const sf::Time frameTime;
         const bool loop;
 
@@ -17,7 +17,7 @@ struct Animation {
         const int offset_w;
 
         /** Constructor : width, height of a sprite, then offsetw, offseth then nb frame then isLoop**/
-        explicit Animation(const int,const int,const int,const int,const sf::Texture&,const int,sf::Time _fT=sf::seconds(0.1),const bool _loop=true);      
+        explicit Animation(const int,const int,const int,const int,const sf::Texture&,const sf::Vector2i,sf::Time _fT=sf::seconds(0.1),const bool _loop=true);      
 
 };
 

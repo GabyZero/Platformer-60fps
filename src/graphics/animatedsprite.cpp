@@ -14,7 +14,11 @@ animation(&_animation)
 
 void AnimatedSprite::updateSprite()
 {
-    setTextureRect({animation->width*currentFrame+animation->offset_w,animation->offset_h,animation->width,animation->height}); // todo: add offset
+    int x = animation->width*(currentFrame%animation->nbFrames.x) + animation->offset_w;
+    int y = animation->height*(currentFrame/animation->nbFrames.x) + animation->offset_h;
+    setTextureRect({x,y,
+                    animation->width,
+                    animation->height});
 }
 
 void AnimatedSprite::resetAnim()
@@ -34,7 +38,7 @@ void AnimatedSprite::update(float dt)
         //reset timer without loosing time
         clock -= animation->frameTime;
 
-        if(currentFrame +1 < animation->nbFrames)
+        if(currentFrame +1 < (animation->nbFrames.x * animation->nbFrames.y))
         {
             //next frame
             currentFrame++;
@@ -49,6 +53,7 @@ void AnimatedSprite::update(float dt)
             else
             {
                 isPlaying=false;
+                //currentFrame=0;
             }
             
         }

@@ -39,7 +39,6 @@ class Game{
     
     protected:      
         sf::RenderWindow window;
-        sf::View view;
         std::queue<Event> eventList;
         
         static bool pause;
@@ -47,6 +46,8 @@ class Game{
         int level = 0;
 
     public:
+        sf::View view;
+
         Scene scene;
         ui::UIManager ui;
         audio::AudioManager audioManager;

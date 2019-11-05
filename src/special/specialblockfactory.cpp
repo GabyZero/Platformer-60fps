@@ -47,6 +47,7 @@ AnimatedBlock *SpecialBlockFactory::getCastle()
     graphics::Animation& anim = resources::ResourcesManager::instance().animations.getAsset("castle");
     std::cout << "Returning a castle" << std::endl;
     AnimatedBlock* res = new AnimatedBlock(anim,false);
+    res->setPlaying(false);
     res->setScale(250,250);
     return res;
 }

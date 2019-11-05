@@ -16,7 +16,7 @@ void Gamev1::run()
     sf::Clock clock;
 
 
-    window.setFramerateLimit(_FPS+2);
+    //window.setFramerateLimit(_FPS+2);
 
     audioManager.start();
     
@@ -35,6 +35,7 @@ void Gamev1::run()
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) Game::setPause(false); //debug
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) && sf::Keyboard::isKeyPressed(sf::Keyboard::M)) audioManager.setMute(false);
         else if(sf::Keyboard::isKeyPressed(sf::Keyboard::M)){audioManager.setMute(true);}
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {scene.level.endLevel(level);scene.level.switchlevel.launch();}
         if(!pause)
         {
             window.clear();
@@ -62,6 +63,6 @@ void Gamev1::run()
         dt = (end-begin).asSeconds();
 
         begin = end;
-        //std::cout << 1.0f/dt << std::endl;
+        std::cout << 1.0f/dt << std::endl;
     }
 }

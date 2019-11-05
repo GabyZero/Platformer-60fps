@@ -13,3 +13,8 @@ void AnimatedBlock::update(float dt)
 {
     dynamic_cast<graphics::AnimatedSprite*>(sprite)->update(dt);
 }
+
+void AnimatedBlock::setPlaying(bool b)
+{
+    dynamic_cast<graphics::AnimatedSprite*>(sprite)->isPlaying = b;
+}

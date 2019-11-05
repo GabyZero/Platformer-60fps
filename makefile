@@ -3,8 +3,8 @@
 # Compilation #
 CC = g++
 EXECUTABLE = exec
-CPPFLAGS = -Wall -Wextra -pedantic -g -std=c++17 -Wreorder -fdiagnostics-show-option   #-lpthread# 
-LDFLAGS = -std=c++17 -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio #-lpthread
+CPPFLAGS = -Wall -Wextra -pedantic -g -std=c++17 -Wreorder -fdiagnostics-show-option   -lpthread
+LDFLAGS = -std=c++17 -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lpthread
 
 
 # Directory #

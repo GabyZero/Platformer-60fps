@@ -9,8 +9,13 @@
 
 #include "game.hpp"
 
-Level::Level(Game &_game) : game(_game)
+
+Level::Level(Game &_game) : game(_game), switchlevel(&Level::switchLevel, this)
 {
+    others = new physics::ICollidable*[LevelOther::LOCOUNT];
+    for (int i=0;i<LOCOUNT;++i)
+        others[i] = nullptr;
+
 }
 
 Level::~Level()
@@ -20,13 +25,23 @@ Level::~Level()
 
     for (physics::ICollidable *col : trigerrable)
         delete col;
+
+    for (int i=0;i<LOCOUNT;++i)
+        delete others[i];
+
+    delete[] others;
 }
 
 bool Level::initLevel(int id)
 {
     collidable.clear();
     trigerrable.clear();
-    others.clear();
+        for (int i=0;i<LOCOUNT;++i)
+        delete others[i];
+
+    delete[] others;
+
+
     if(id>=_GAME_NBLVL) return false;
     else
     {
@@ -86,7 +101,9 @@ void Level::loadMap(const std::string path)
                             {   
                                 auto pair = special::SpecialBlockFactory::getBlock(id, game);
                                 pair.first->setPosition(x, y);
-                                if(pair.second)
+                                if(id==_BEGIN_SPECIALTILE+special::SpecialBlockFactory::CASTLE)
+                                    others[LevelOther::CASTLE] = pair.first;
+                                else if(pair.second)
                                     collidable.push_back(pair.first);
                                 else
                                     trigerrable.push_back(pair.first);
@@ -136,26 +153,61 @@ void Level::initLevel()
     //** todo: ajout de 4 gros collidable autour du niveau
 }
 
+void Level::switchLevel()
+{
+    for(;;){
+        sf::sleep(sf::seconds(1));
+        std::cout << "AAAAAAAAAAAAAAAAAAAAAA" << std::endl;
+    }
+}
+
+
+
+void Level::endLevel(int newlevel)
+{
+    AnimatedBlock* bloc = new AnimatedBlock(resources::ResourcesManager::instance().animations.getAsset("explosion"),false);
+    bloc->setPosition(others[CASTLE]->getPosition().x-150, others[CASTLE]->getPosition().y-128);
+    others[EXPLOSION] = bloc;
+    ((AnimatedBlock*)dynamic_cast<AnimatedBlock*>(others[CASTLE]))->setPlaying(true);;
+}
+
 void Level::update(const double dt)
 {
     for (physics::ICollidable *col : collidable)
         col->update(dt);
     for (physics::ICollidable *col : trigerrable)
         col->update(dt);
+    for (int i=0;i<LOCOUNT;++i)
+    {
+        if(others[i]!=nullptr)
+            others[i]->update(dt);
+    }
 }
 
 void Level::updatePhysics(const double)
 {
 }
 
+bool inView(const sf::Vector2f& pos, const sf::View &view){
+	if(pos.x > view.getCenter().x + view.getSize().x || pos.y > view.getCenter().y + view.getSize().y){
+		return false;
+	}
+	return true;
+}
+
 void Level::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    for (physics::ICollidable *col : collidable)
-        target.draw(*col, states);
+    for (physics::ICollidable *col : collidable){
+        if(inView(col->getPosition(), game.view))
+            target.draw(*col, states);
+    }
 
     for (physics::ICollidable *col : trigerrable)
         target.draw(*col, states);
 
-    for (sf::Sprite sp : others)
-        target.draw(sp, states);
+    for (int i=0;i<LOCOUNT;++i)
+    {
+        if(others[i]!=nullptr)
+            target.draw(*(others[i]),states);
+    }
 }

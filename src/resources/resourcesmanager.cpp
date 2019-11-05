@@ -59,6 +59,11 @@ namespace resources{
             textures.addAsset("castle",texture);
 
             texture = new sf::Texture();
+            texture->loadFromFile(path+"animations/explosion.png");
+            textures.addAsset("explosion",texture);
+            /** fin animation **/
+
+            texture = new sf::Texture();
             texture->loadFromFile(path+"player/player.png");
             textures.addAsset("playerA", texture);
         }catch(std::exception e)
@@ -101,11 +106,14 @@ namespace resources{
 
     void ResourcesManager::loadAnimation()
     {
-        graphics::Animation *animation = new graphics::Animation(32,32,0,0,textures.getAsset("fire"), 3);
+        graphics::Animation *animation = new graphics::Animation(32,32,0,0,textures.getAsset("fire"), {3,1});
         animations.addAsset("fire",animation);
 
-        animation = new graphics::Animation(1446,1224,0,0,textures.getAsset("castle"), 2, sf::microseconds(1), false);
+        animation = new graphics::Animation(1446,1224,0,0,textures.getAsset("castle"), {2,1}, sf::seconds(1.5f), false);
         animations.addAsset("castle",animation);
+
+        animation = new graphics::Animation(512,512,0,0,textures.getAsset("explosion"),{8,9}, sf::seconds(0.04),false);
+        animations.addAsset("explosion",animation);
 
         std::cout << "Animation loaded" << std::endl;
     }
@@ -115,14 +123,14 @@ namespace resources{
         const sf::Texture &t = textures.getAsset("playerA");
 
 
-        anims->animations[PlayerState::iddleL] = new graphics::Animation(17,22,0,0,t,2,sf::seconds(0.9f)); //iddleL
-        anims->animations[PlayerState::iddleR] = new graphics::Animation(17,22,0,24,t,2,sf::seconds(0.9f)); //iddleR
+        anims->animations[PlayerState::iddleL] = new graphics::Animation(17,22,0,0,t,{2,1},sf::seconds(0.9f)); //iddleL
+        anims->animations[PlayerState::iddleR] = new graphics::Animation(17,22,0,24,t,{2,1},sf::seconds(0.9f)); //iddleR
         
-        anims->animations[PlayerState::walkL] = new graphics::Animation(17,22,42,0,t,4,sf::seconds(0.2f)); //walkL
-        anims->animations[PlayerState::walkR] = new graphics::Animation(17,22,42,24,t,4,sf::seconds(0.1f)); //walkR
+        anims->animations[PlayerState::walkL] = new graphics::Animation(17,22,42,0,t,{4,1},sf::seconds(0.2f)); //walkL
+        anims->animations[PlayerState::walkR] = new graphics::Animation(17,22,42,24,t,{4,1},sf::seconds(0.1f)); //walkR
         
-        anims->animations[PlayerState::runL] = new graphics::Animation(17,22,102,0,t,4,sf::seconds(0.15f)); //runL
-        anims->animations[PlayerState::runR] = new graphics::Animation(17,22,102,24,t,4,sf::seconds(0.15f)); //runR
+        anims->animations[PlayerState::runL] = new graphics::Animation(17,22,102,0,t,{4,1},sf::seconds(0.15f)); //runL
+        anims->animations[PlayerState::runR] = new graphics::Animation(17,22,102,24,t,{4,1},sf::seconds(0.15f)); //runR
 
         stateAnimations.addAsset("player", anims);
 
